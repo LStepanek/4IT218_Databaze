@@ -785,6 +785,206 @@ HAVING count(ZAM.os_cis) >= 2
 ORDER BY ZAM.fce ASC;
 
 
+--------------------------------------------------------------------------------
+-- 69. Vypište jména zaměstnanců s názvem oddělení a jménem vedoucího oddělení.
+
+SELECT ZAM.os_cis AS "osobni_cislo",
+       ZAM.jmeno AS "jmeno",
+       ODDEL.nazev AS "nazev",
+       VEDOUCI.jmeno AS "jmeno_vedouciho"
+FROM ZAM
+LEFT JOIN ODDEL
+ON (ZAM.cis_odd = ODDEL.cis_odd)
+LEFT JOIN ZAM VEDOUCI
+ON (ODDEL.sef = VEDOUCI.os_cis)
+ORDER BY ZAM.os_cis ASC;
+
+
+--------------------------------------------------------------------------------
+-- 70. Vypište jména zaměstnanců se jménem bezprostředně nadřízeného.
+
+SELECT ZAM.os_cis AS "osobni_cislo",
+       ZAM.jmeno AS "jmeno",
+       NADRIZENY.jmeno AS "jmeno_nadrizeneho"
+FROM ZAM
+LEFT JOIN ZAM NADRIZENY
+ON (ZAM.nadr = NADRIZENY.os_cis)
+ORDER BY ZAM.os_cis ASC;
+
+
+--------------------------------------------------------------------------------
+-- 71. Vypište jména zaměstnanců se jménem bezprostředně nadřízeného
+-- a jménem vedoucího oddělení, ve kterém pracují.
+
+SELECT ZAM.os_cis AS "osobni_cislo",
+       ZAM.jmeno AS "jmeno",
+       NADRIZENY.jmeno AS "jmeno_nadrizeneho",
+       VEDOUCI.jmeno AS "jmeno_vedouciho"
+FROM ZAM
+LEFT JOIN ZAM NADRIZENY
+ON (ZAM.nadr = NADRIZENY.os_cis)
+LEFT JOIN ODDEL
+ON (ZAM.cis_odd = ODDEL.cis_odd)
+LEFT JOIN ZAM VEDOUCI
+ON (ODDEL.sef = VEDOUCI.os_cis)
+ORDER BY ZAM.jmeno ASC;
+
+
+--------------------------------------------------------------------------------
+-- 72. Vypište počty inženýrů v jednotlivých odděleních (název oddělení,
+-- jméno vedoucího).
+
+SELECT ODDEL.cis_odd AS "cislo_oddeleni",
+       ODDEL.nazev AS "nazev_oddeleni",
+       count(ZAM.os_cis) AS "pocet_inzenyru",
+       VEDOUCI.jmeno AS "jmeno_vedouciho"
+FROM ODDEL
+LEFT JOIN ZAM
+ON (ODDEL.cis_odd = ZAM.cis_odd)
+AND ZAM.titul = 'ING'
+LEFT JOIN ZAM VEDOUCI
+ON (ODDEL.sef = VEDOUCI.os_cis)
+GROUP BY ODDEL.cis_odd, ODDEL.nazev, VEDOUCI.jmeno
+ORDER BY ODDEL.cis_odd ASC;
+
+
+--------------------------------------------------------------------------------
+-- 73. Vypište jména zaměstnanců s platem vyšším než má jejich bezprostředně
+-- nadřízený.
+
+SELECT ZAM.os_cis AS "osobni_cislo",
+       ZAM.jmeno AS "jmeno_zamestnance",
+       ZAM.plat AS "plat_zamestnance",
+       NADRIZENY.plat AS "plat_nadrizeneho"
+FROM ZAM
+LEFT JOIN ZAM NADRIZENY
+ON (ZAM.nadr = NADRIZENY.os_cis)
+WHERE ZAM.plat > NADRIZENY.plat;  -- výsledekem tabulka 0x4
+
+
+--------------------------------------------------------------------------------
+-- 74. Vypište jména zaměstnanců s platem stejným jako má zaměstnanec DLOUHY.
+
+SELECT ZAM.os_cis AS "osobni_cislo",
+       ZAM.jmeno AS "jmeno_zamestnance",
+       ZAM.plat AS "plat_zamestnance"
+FROM ZAM
+WHERE ZAM.plat = (
+    SELECT ZAM.plat
+    FROM ZAM
+    WHERE ZAM.jmeno = 'DLOUHY'
+)
+ORDER BY ZAM.os_cis ASC;
+
+
+--------------------------------------------------------------------------------
+-- 75. Vypište jména vedoucích jednotlivých oddělení (název) s počtem
+-- pracovníků v oddělení.
+
+SELECT ODDEL.cis_odd AS "cislo_oddeleni",
+       ODDEL.nazev AS "nazev_oddeleni",
+       VEDOUCI.jmeno AS "jmeno_vedouciho",
+       count(ZAM.os_cis) AS "pocet_zamestnancu"
+FROM ODDEL
+LEFT JOIN ZAM
+ON (ODDEL.cis_odd = ZAM.cis_odd)
+LEFT JOIN ZAM VEDOUCI
+ON (ODDEL.sef = VEDOUCI.os_cis)
+GROUP BY ODDEL.cis_odd,
+         ODDEL.nazev,
+         VEDOUCI.jmeno
+ORDER BY ODDEL.cis_odd;
+
+
+--------------------------------------------------------------------------------
+-- 76. Vypište přehled funkcí (fce) vykonávaných v jednotlivých odděleních
+-- (číslo, název) s počtem zaměstnanců, kteří je vykonávají.
+
+SELECT ODDEL.cis_odd AS "cislo_oddeleni",
+       ODDEL.nazev AS "nazev_oddeleni",
+       ZAM.fce AS "funkce",
+       count(ZAM.os_cis) AS "pocet_vykonavajicich_funkci"
+FROM ODDEL
+LEFT JOIN ZAM
+ON (ODDEL.cis_odd = ZAM.cis_odd)
+GROUP BY ODDEL.cis_odd,
+         ODDEL.nazev,
+         ZAM.fce
+ORDER BY ODDEL.cis_odd;
+
+
+--------------------------------------------------------------------------------
+-- 77. Vypište jména vedoucích jednotlivých oddělení s počty pracovníků
+-- v oddělení vykonávajícími jednotlivé funkce (vypište osobní číslo,
+-- jméno vedoucího oddělení, číslo oddělení, název oddělení, funkci,
+-- počet zaměstnanců vykonávajících funkci).
+
+SELECT VEDOUCI.os_cis AS "osobni_cislo_vedouciho",
+       VEDOUCI.jmeno AS "jmeno_vedouciho",
+       ODDEL.cis_odd AS "cislo_oddeleni",
+       ODDEL.nazev AS "nazev_oddeleni",
+       ZAM.fce AS "funkce",
+       count(ZAM.os_cis) AS "pocet_vykonavajicich_funkci"
+FROM ODDEL
+LEFT JOIN ZAM
+ON (ODDEL.cis_odd = ZAM.cis_odd)
+LEFT JOIN ZAM VEDOUCI
+ON (ODDEL.sef = VEDOUCI.os_cis)
+GROUP BY VEDOUCI.os_cis,
+         VEDOUCI.jmeno,
+         ODDEL.cis_odd,
+         ODDEL.nazev,
+         ZAM.fce
+ORDER BY VEDOUCI.os_cis;
+
+
+--------------------------------------------------------------------------------
+-- 78. Vypište počty zaměstnanců bezprostředně podřízených jednotlivým
+-- zaměstnancům (osobní číslo nadřízeného zaměstnance, jméno nadřízeného
+-- zaměstnance, počet podřízených zaměstnanců). Seřaďte abecedně dle jména.
+
+SELECT NADRIZENY.os_cis AS "osobni_cislo_nadrizeneho",
+       NADRIZENY.jmeno AS "jmeno_nadrizeneho",
+       count(ZAM.os_cis) AS "pocet_podrizenych"
+FROM ZAM
+LEFT JOIN ZAM NADRIZENY
+ON (ZAM.nadr = NADRIZENY.os_cis)
+GROUP BY NADRIZENY.os_cis,
+         NADRIZENY.jmeno
+ORDER BY NADRIZENY.jmeno ASC;
+
+
+--------------------------------------------------------------------------------
+-- 79. Vypište, kteří vedoucí (osobní číslo, jméno) šéfují oddělení
+-- s alespoň 4 zaměstnanci.
+
+SELECT VEDOUCI.os_cis AS "osobni_cislo_vedouciho",
+       VEDOUCI.jmeno AS "jmeno_vedouciho",
+       ODDEL.cis_odd AS "cislo_oddeleni",
+       ODDEL.nazev AS "nazev_oddeleni",
+       count(ZAM.os_cis) AS "pocet_zamestnancu"
+FROM ODDEL
+LEFT JOIN ZAM
+ON (ODDEL.cis_odd = ZAM.cis_odd)
+LEFT JOIN ZAM VEDOUCI
+ON (ODDEL.sef = VEDOUCI.os_cis)
+GROUP BY VEDOUCI.os_cis,
+         VEDOUCI.jmeno,
+         ODDEL.cis_odd,
+         ODDEL.nazev
+HAVING count(ZAM.os_cis) >= 4
+ORDER BY VEDOUCI.os_cis ASC;
+
+
+
+
+
+
+
+
+
+
+
 
 
 
