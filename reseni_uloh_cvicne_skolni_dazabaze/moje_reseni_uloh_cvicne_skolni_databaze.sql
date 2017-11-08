@@ -3,6 +3,7 @@
 --------------------------------------------------------------------------------
 
 /*
+  
   (CC) BY-NC-ND 3.0 CZ | Lubomír Štěpánek | listopad 2017
   
   _______________________________________________________________
@@ -690,11 +691,98 @@ GROUP BY ODDEL.cis_odd, ODDEL.nazev
 ORDER BY ODDEL.cis_odd ASC;
 
 
+--------------------------------------------------------------------------------
+-- 62. Vypište čísla oddělení s více jak pěti zaměstnanci.
+
+SELECT ODDEL.cis_odd AS "cislo_oddeleni",
+       ODDEL.nazev AS "nazev_oddeleni",
+       count(ZAM.os_cis) AS "pocet_zamestnancu"
+FROM ODDEL
+LEFT JOIN ZAM
+ON (ODDEL.cis_odd = ZAM.cis_odd)
+GROUP BY ODDEL.cis_odd, ODDEL.nazev
+HAVING count(ZAM.os_cis) > 5
+ORDER BY ODDEL.cis_odd ASC;
 
 
+--------------------------------------------------------------------------------
+-- 63. Vypište názvy oddělení, ve kterých jsou alespoň dva lidé s titulem.
+
+SELECT ODDEL.cis_odd AS "cislo_oddeleni",
+       ODDEL.nazev AS "nazev_oddeleni",
+       count(ZAM.os_cis) AS "pocet_zamestnancu_titulem"
+FROM ODDEL
+LEFT JOIN ZAM
+ON (ODDEL.cis_odd = ZAM.cis_odd)
+GROUP BY ODDEL.cis_odd, ODDEL.nazev
+HAVING count(ZAM.titul) >= 2
+ORDER BY ODDEL.cis_odd ASC;
 
 
+--------------------------------------------------------------------------------
+-- 64. Které funkce vykonávají více jak tři zaměstnanci?
 
+SELECT ZAM.fce AS "funkce",
+       count(ZAM.os_cis) AS "pocet_zamestnancu"
+FROM ZAM
+GROUP BY ZAM.fce
+HAVING count(ZAM.os_cis) > 3
+ORDER BY ZAM.fce ASC;
+
+
+--------------------------------------------------------------------------------
+-- 65. Vypište osobní čísla a jména zaměstnanců, kteří mají přidělené
+-- alespoň dva úkoly.
+
+SELECT ZAM.os_cis AS "osobni_cislo",
+       ZAM.jmeno AS "jmeno",
+       count(UKOLY.cis_uk) AS "pocet_ukolu"
+FROM ZAM
+LEFT JOIN UKOLY
+ON (ZAM.os_cis = UKOLY.os_cis)
+GROUP BY ZAM.os_cis, ZAM.jmeno
+HAVING count(UKOLY.cis_uk) >= 2
+ORDER BY ZAM.os_cis ASC;
+
+
+--------------------------------------------------------------------------------
+-- 66. Vypište oddělení, ve kterých se vyplácí měsíčně na platech přes 36000,-.
+
+SELECT ODDEL.cis_odd AS "cislo_oddeleni",
+       ODDEL.nazev AS "nazev_oddeleni",
+       sum(ZAM.plat) AS "vyplaceno_mesicne_na_platech"
+FROM ODDEL
+LEFT JOIN ZAM
+ON (ODDEL.cis_odd = ZAM.cis_odd)
+GROUP BY ODDEL.cis_odd, ODDEL.nazev
+HAVING sum(ZAM.plat) > 36000
+ORDER BY ODDEL.cis_odd ASC;
+
+
+--------------------------------------------------------------------------------
+-- 67. Vypište názvy oddělení, ve kterých je maximální plat menší než 12000,-.
+
+SELECT ODDEL.cis_odd AS "cislo_oddeleni",
+       ODDEL.nazev AS "nazev_oddeleni",
+       max(ZAM.plat) AS "maximalni_plat"
+FROM ODDEL
+LEFT JOIN ZAM
+ON (ODDEL.cis_odd = ZAM.cis_odd)
+GROUP BY ODDEL.cis_odd, ODDEL.nazev
+HAVING max(ZAM.plat) < 12000
+ORDER BY ODDEL.cis_odd ASC;
+
+
+--------------------------------------------------------------------------------
+-- 68. Které funkce vykonávají alespoň dva inženýři?
+
+SELECT ZAM.fce AS "funkce",
+       count(ZAM.os_cis) AS "pocet_inzenyru"
+FROM ZAM
+WHERE ZAM.titul = 'ING'
+GROUP BY ZAM.fce
+HAVING count(ZAM.os_cis) >= 2
+ORDER BY ZAM.fce ASC;
 
 
 
