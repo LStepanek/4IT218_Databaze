@@ -1450,6 +1450,35 @@ ORDER BY BEZ_TITULU.cis_odd;
 -- 103. Pro všechna oddělení vypište počty zaměstnanců a počty zaměstnanců,
 -- kteří mají přidělený úkol.
 
+SELECT POCTY_ZAMESTNANCU.cis_odd AS "cislo_oddeleni",
+       POCTY_ZAMESTNANCU.nazev AS "nazev_oddeleni",
+       POCTY_ZAMESTNANCU.pocet_zamestnancu,
+       POCTY_RESICICH.pocet_resicich_zamestnancu
+FROM (
+    SELECT ODDEL.cis_odd,
+           ODDEL.nazev,
+           count(ZAM.os_cis) pocet_zamestnancu
+    FROM ODDEL
+    LEFT JOIN ZAM
+    ON (ODDEL.cis_odd = ZAM.cis_odd)
+    GROUP BY ODDEL.cis_odd,
+             ODDEL.nazev
+    ORDER BY ODDEL.cis_odd
+) POCTY_ZAMESTNANCU
+JOIN (
+    SELECT ODDEL.cis_odd,
+           count(DISTINCT UKOLY.os_cis) pocet_resicich_zamestnancu
+    FROM ODDEL
+    LEFT JOIN ZAM
+    ON (ODDEL.cis_odd = ZAM.cis_odd)
+    LEFT JOIN UKOLY
+    ON (ZAM.os_cis = UKOLY.os_cis)    
+    GROUP BY ODDEL.cis_odd
+    ORDER BY ODDEL.cis_odd
+) POCTY_RESICICH
+ON (POCTY_ZAMESTNANCU.cis_odd = POCTY_RESICICH.cis_odd)
+ORDER BY POCTY_ZAMESTNANCU.cis_odd;
+
 
 --------------------------------------------------------------------------------
 -- 104. Pro všechna oddělení vypište počty zaměstnanců a počty řešených úkolů.
@@ -1481,6 +1510,7 @@ JOIN (
     ORDER BY ODDEL.cis_odd
 ) POCTY_RESENYCH_UKOLU
 ON (POCTY_ZAMESTNANCU.cis_odd = POCTY_RESENYCH_UKOLU.cis_odd)
+ORDER BY POCTY_ZAMESTNANCU.cis_odd;
 
 
 --------------------------------------------------------------------------------
