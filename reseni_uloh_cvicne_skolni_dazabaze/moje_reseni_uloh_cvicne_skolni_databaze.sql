@@ -561,7 +561,23 @@ FROM ODDEL
 LEFT JOIN ZAM
 ON (ODDEL.cis_odd = ZAM.cis_odd)
 AND ZAM.titul = 'ING'
-GROUP BY ODDEL.cis_odd, ODDEL.nazev
+GROUP BY ODDEL.cis_odd,
+         ODDEL.nazev
+ORDER BY ODDEL.cis_odd;
+
+-- anebo
+SELECT ODDEL.cis_odd AS "cislo_oddeleni",
+       ODDEL.nazev AS "nazev_oddeleni",
+       count(
+           CASE
+               WHEN ZAM.titul = 'ING' THEN 1
+           END
+       ) AS "pocet_inzenyru"
+FROM ODDEL
+LEFT JOIN ZAM
+ON (ODDEL.cis_odd = ZAM.cis_odd)
+GROUP BY ODDEL.cis_odd,
+         ODDEL.nazev
 ORDER BY ODDEL.cis_odd;
 
 
@@ -576,6 +592,22 @@ LEFT JOIN ZAM
 ON (ODDEL.cis_odd = ZAM.cis_odd)
 AND ZAM.titul IS NULL
 GROUP BY ODDEL.cis_odd, ODDEL.nazev
+ORDER BY ODDEL.cis_odd;
+
+-- anebo
+SELECT ODDEL.cis_odd AS "cislo_oddeleni",
+       ODDEL.nazev AS "nazev_oddeleni",
+       count(
+           CASE
+              WHEN ZAM.titul IS NULL
+              AND ZAM.os_cis IS NOT NULL THEN 1
+           END
+       ) AS "pocet_zamestnancu_bez_titulu"
+FROM ODDEL
+LEFT JOIN ZAM
+ON (ODDEL.cis_odd = ZAM.cis_odd)
+GROUP BY ODDEL.cis_odd,
+         ODDEL.nazev
 ORDER BY ODDEL.cis_odd;
 
 
@@ -1162,8 +1194,293 @@ GROUP BY ZAM.os_cis,
 ORDER BY ZAM.os_cis;
 
 
+--------------------------------------------------------------------------------
+-- 90. Vypište čísla oddělení, ve kterých pracují nějací zaměstnanci.
+
+SELECT ODDEL.cis_odd AS "cislo_oddeleni",
+       ODDEL.nazev AS "nazev_oddeleni",
+       count(ZAM.os_cis) AS "pocet_zamestnanců"
+FROM ODDEL
+LEFT JOIN ZAM
+ON (ODDEL.cis_odd = ZAM.cis_odd)
+GROUP BY ODDEL.cis_odd,
+         ODDEL.nazev
+HAVING count(ZAM.os_cis) > 0
+ORDER BY ODDEL.cis_odd ASC;
+
+-- anebo bez JOINu
+SELECT ZAM.cis_odd AS "cislo_oddeleni",
+       count(ZAM.os_cis) AS "pocet_zamestnancu"
+FROM ZAM
+GROUP BY ZAM.cis_odd
+HAVING count(ZAM.os_cis) > 0;
 
 
+--------------------------------------------------------------------------------
+-- 91. Vypište čísla oddělení, ve kterých pracují inženýři ('ING').
+
+SELECT ODDEL.cis_odd AS "cislo_oddeleni",
+       ODDEL.nazev AS "nazev_oddeleni",
+       count(ZAM.os_cis) AS "pocet_inzenyru"
+FROM ODDEL
+LEFT JOIN ZAM
+ON (ODDEL.cis_odd = ZAM.cis_odd)
+AND ZAM.titul = 'ING'
+GROUP BY ODDEL.cis_odd,
+         ODDEL.nazev
+HAVING count(ZAM.os_cis) > 0
+ORDER BY ODDEL.cis_odd ASC;
+
+-- anebo bez JOINu
+SELECT ZAM.cis_odd AS "cislo_oddeleni",
+       count(ZAM.os_cis) AS "pocet_inzenyru"
+FROM ZAM
+WHERE ZAM.titul = 'ING'
+GROUP BY ZAM.cis_odd
+ORDER BY ZAM.cis_odd ASC;
+
+
+--------------------------------------------------------------------------------
+-- 92. Vypište čísla a názvy oddělení, ve kterých pracují inženýři ('ING').
+
+SELECT ODDEL.cis_odd AS "cislo_oddeleni",
+       ODDEL.nazev AS "nazev_oddeleni",
+       count(ZAM.os_cis) AS "pocet_inzenyru"
+FROM ODDEL
+LEFT JOIN ZAM
+ON (ODDEL.cis_odd = ZAM.cis_odd)
+AND ZAM.titul = 'ING'
+GROUP BY ODDEL.cis_odd,
+         ODDEL.nazev
+HAVING count(ZAM.os_cis) > 0
+ORDER BY ODDEL.cis_odd ASC;
+
+
+--------------------------------------------------------------------------------
+-- 93. Vypište čísla a názvy oddělení, ve kterých nepracuje žádný
+-- inženýr ('ING').
+
+SELECT ODDEL.cis_odd AS "cislo_oddeleni",
+       ODDEL.nazev AS "nazev_oddeleni",
+       count(ZAM.os_cis) AS "pocet_inzenyru"
+FROM ODDEL
+LEFT JOIN ZAM
+ON (ODDEL.cis_odd = ZAM.cis_odd)
+AND ZAM.titul = 'ING'
+GROUP BY ODDEL.cis_odd,
+         ODDEL.nazev
+HAVING count(ZAM.os_cis) = 0
+ORDER BY ODDEL.cis_odd ASC;
+
+
+--------------------------------------------------------------------------------
+-- 94. Vypište čísla zaměstnanců, kteří mají podřízené.
+
+SELECT ZAM.os_cis AS "osobni_cislo",
+       ZAM.jmeno AS "jmeno"
+FROM ZAM
+WHERE ZAM.os_cis IN (
+    SELECT DISTINCT ZAM.nadr
+    FROM ZAM
+);
+
+-- anebo trochu jinak
+SELECT --ZAM.os_cis AS "osobni_cislo_podrizeneho",
+       --ZAM.jmeno AS "jmeno_podrizeneho",
+       DISTINCT NADRIZENY.os_cis AS "osobni_cislo_nadrizeneho"--,
+       --NADRIZENY.jmeno AS "jmeno_nadrizeneho"
+FROM ZAM
+LEFT JOIN ZAM NADRIZENY
+ON (ZAM.nadr = NADRIZENY.os_cis)
+WHERE NADRIZENY.os_cis IS NOT NULL
+ORDER BY NADRIZENY.os_cis ASC;
+
+
+--------------------------------------------------------------------------------
+-- 95. Vypište čísla a jména zaměstnanců, kteří mají podřízené.
+
+SELECT ZAM.os_cis AS "osobni_cislo",
+       ZAM.jmeno AS "jmeno"
+FROM ZAM
+WHERE ZAM.os_cis IN (
+    SELECT DISTINCT ZAM.nadr
+    FROM ZAM
+);
+
+-- anebo
+SELECT --ZAM.os_cis AS "osobni_cislo_podrizeneho",
+       --ZAM.jmeno AS "jmeno_podrizeneho",
+       NADRIZENY.os_cis AS "osobni_cislo_nadrizeneho",
+       NADRIZENY.jmeno AS "jmeno_nadrizeneho"
+FROM ZAM
+LEFT JOIN ZAM NADRIZENY
+ON (ZAM.nadr = NADRIZENY.os_cis)
+WHERE NADRIZENY.os_cis IS NOT NULL
+GROUP BY NADRIZENY.os_cis,
+         NADRIZENY.jmeno
+ORDER BY NADRIZENY.os_cis ASC;
+
+
+--------------------------------------------------------------------------------
+-- 96. Vypište průměrný plat za všechny zaměstnance.
+
+SELECT round(avg(ZAM.plat), 2) AS "prumerny_plat"
+FROM ZAM;
+
+
+--------------------------------------------------------------------------------
+-- 97. Vypište čísla a jména zaměstnanců, kteří mají plat větší, než je
+-- průměrný plat všech zaměstnanců.
+
+SELECT ZAM.os_cis AS "osobni_cislo",
+       ZAM.jmeno AS "jmeno_zamestnance"
+FROM ZAM
+WHERE ZAM.plat > (
+    SELECT avg(ZAM.plat)
+    FROM ZAM
+)
+ORDER BY ZAM.os_cis;
+
+
+--------------------------------------------------------------------------------
+-- 98. Vypište čísla a jména zaměstnanců, kteří mají plat větší, než je
+-- průměrný plat v jejich oddělení.
+
+SELECT ZAM.os_cis AS "osobni_cislo",
+       ZAM.jmeno AS "jmeno_zamestnance",
+       ZAM.plat AS "plat_zamestnance",
+       PRUMERNE_PLATY.cislo_oddeleni,
+       PRUMERNE_PLATY.prumerny_plat_oddeleni
+FROM ZAM
+LEFT JOIN (
+    SELECT ZAM.cis_odd cislo_oddeleni,
+           avg(ZAM.plat) prumerny_plat_oddeleni
+    FROM ZAM
+    GROUP BY ZAM.cis_odd
+) PRUMERNE_PLATY
+ON (ZAM.cis_odd = PRUMERNE_PLATY.cislo_oddeleni)
+WHERE ZAM.plat > PRUMERNE_PLATY.prumerny_plat_oddeleni;
+
+
+--------------------------------------------------------------------------------
+-- 99. Vypište čísla a jména zaměstnanců, kteří mají přidělený úkol.
+
+SELECT DISTINCT ZAM.os_cis AS "osobni_cislo",
+       ZAM.jmeno AS "jmeno_zamestnance"
+FROM ZAM
+JOIN UKOLY
+ON (ZAM.os_cis = UKOLY.os_cis);
+
+-- anebo
+SELECT ZAM.os_cis AS "osobni_cislo",
+       ZAM.jmeno AS "jmeno_zamestnance"--,
+       --UKOLY.cis_uk AS "cislo_ukolu"
+FROM ZAM
+JOIN UKOLY
+ON (ZAM.os_cis = UKOLY.os_cis)
+GROUP BY ZAM.os_cis,
+         ZAM.jmeno;
+
+
+--------------------------------------------------------------------------------
+-- 100. Vypište čísla a jména zaměstnanců, kteří nemají přidělený žádný úkol.
+
+SELECT ZAM.os_cis AS "osobni_cislo",
+       ZAM.jmeno AS "jmeno_zamestnance"
+FROM ZAM
+LEFT JOIN UKOLY
+ON (ZAM.os_cis = UKOLY.os_cis)
+WHERE UKOLY.os_cis IS NULL
+ORDER BY ZAM.os_cis ASC;
+
+
+--------------------------------------------------------------------------------
+-- 101. Vypište čísla a popisy úkolů, které neřeší vedoucí oddělení.
+
+SELECT UKOLY.cis_uk AS "cislo_ukolu",
+       UKOLY.popis AS "popis_ukolu"
+FROM UKOLY
+LEFT JOIN ZAM
+ON (UKOLY.os_cis = ZAM.os_cis)
+LEFT JOIN ODDEL
+ON (ZAM.cis_odd = ODDEL.cis_odd)
+WHERE UKOLY.os_cis <> ODDEL.sef
+ORDER BY UKOLY.cis_uk;
+
+
+--------------------------------------------------------------------------------
+-- 102. Vypište pro každé oddělení počet zaměstnanců bez titulu
+-- a počet zaměstnanců, kteří neřeší žádný úkol.
+
+SELECT BEZ_TITULU.cis_odd AS "cislo_oddeleni",
+       BEZ_TITULU.nazev AS "nazev_oddeleni",
+       BEZ_TITULU.pocet_bez_titulu,
+       NERESICI.pocet_neresicich
+FROM (
+    SELECT ODDEL.cis_odd,
+           ODDEL.nazev,
+           count(ZAM.os_cis) pocet_bez_titulu
+    FROM ODDEL
+    LEFT JOIN ZAM
+    ON (ODDEL.cis_odd = ZAM.cis_odd)
+    WHERE ZAM.titul IS NULL
+    GROUP BY ODDEL.cis_odd,
+             ODDEL.nazev
+    ORDER BY ODDEL.cis_odd
+) BEZ_TITULU
+JOIN (
+    SELECT ODDEL.cis_odd,
+           ODDEL.nazev,
+           count(ZAM.os_cis) pocet_neresicich
+    FROM ODDEL
+    LEFT JOIN ZAM
+    ON (ODDEL.cis_odd = ZAM.cis_odd)
+    LEFT JOIN UKOLY
+    ON (ZAM.os_cis = UKOLY.os_cis)
+    WHERE UKOLY.os_cis IS NULL
+    GROUP BY ODDEL.cis_odd,
+             ODDEL.nazev
+    ORDER BY ODDEL.cis_odd
+) NERESICI
+ON (BEZ_TITULU.cis_odd = NERESICI.cis_odd)
+ORDER BY BEZ_TITULU.cis_odd;
+
+
+--------------------------------------------------------------------------------
+-- 103. Pro všechna oddělení vypište počty zaměstnanců a počty zaměstnanců,
+-- kteří mají přidělený úkol.
+
+
+--------------------------------------------------------------------------------
+-- 104. Pro všechna oddělení vypište počty zaměstnanců a počty řešených úkolů.
+
+SELECT POCTY_ZAMESTNANCU.cis_odd AS "cislo_oddeleni",
+       POCTY_ZAMESTNANCU.nazev AS "nazev_oddeleni",
+       POCTY_ZAMESTNANCU.pocet_zamestnancu,
+       POCTY_RESENYCH_UKOLU.pocet_ukolu
+FROM (
+    SELECT ODDEL.cis_odd,
+           ODDEL.nazev,
+           count(ZAM.os_cis) pocet_zamestnancu
+    FROM ODDEL
+    LEFT JOIN ZAM
+    ON (ODDEL.cis_odd = ZAM.cis_odd)
+    GROUP BY ODDEL.cis_odd,
+             ODDEL.nazev
+    ORDER BY ODDEL.cis_odd
+) POCTY_ZAMESTNANCU
+JOIN (
+    SELECT ODDEL.cis_odd,
+           count(UKOLY.cis_uk) pocet_ukolu
+    FROM ODDEL
+    LEFT JOIN ZAM
+    ON (ODDEL.cis_odd = ZAM.cis_odd)
+    LEFT JOIN UKOLY
+    ON (ZAM.os_cis = UKOLY.os_cis)
+    GROUP BY ODDEL.cis_odd
+    ORDER BY ODDEL.cis_odd
+) POCTY_RESENYCH_UKOLU
+ON (POCTY_ZAMESTNANCU.cis_odd = POCTY_RESENYCH_UKOLU.cis_odd)
 
 
 --------------------------------------------------------------------------------
