@@ -1423,7 +1423,7 @@ FROM (
     FROM ODDEL
     LEFT JOIN ZAM
     ON (ODDEL.cis_odd = ZAM.cis_odd)
-    WHERE ZAM.titul IS NULL
+    AND ZAM.titul IS NULL
     GROUP BY ODDEL.cis_odd,
              ODDEL.nazev
     ORDER BY ODDEL.cis_odd
@@ -1437,7 +1437,7 @@ JOIN (
     ON (ODDEL.cis_odd = ZAM.cis_odd)
     LEFT JOIN UKOLY
     ON (ZAM.os_cis = UKOLY.os_cis)
-    WHERE UKOLY.os_cis IS NULL
+    AND UKOLY.os_cis IS NULL
     GROUP BY ODDEL.cis_odd,
              ODDEL.nazev
     ORDER BY ODDEL.cis_odd
