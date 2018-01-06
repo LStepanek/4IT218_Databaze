@@ -1,0 +1,1072 @@
+---
+title: |
+ | ***
+date:
+author:
+documentclass: report
+fontsize: 12pt
+geometry: margin = 2.0cm
+bibliography: references.bib
+csl: iso690-numeric-brackets-cs.csl
+output:
+  pdf_document:
+    number_sections: true
+    fig_caption: true
+    includes:
+      in_header: my_styles.tex
+---
+
+```{r setup, include = FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+
+\thispagestyle{empty}
+{\small
+  
+  \noindent\begin{tabular}{lr}
+  \hline
+  Uživatelské jméno: & \hspace{0.5cm}stel04 \\
+  Počet bodů z testu SQL: & 18 \\
+  Počet bodů z testu DM: & 11 \\
+  \hline
+  \end{tabular}
+  
+  \strut\vfill
+  
+  \noindent (2017) Lubomír Štěpánek, CC BY-NC-ND 3.0 (CZ)
+  
+  \vspace{0.2cm}
+  
+  \noindent \href{%
+      https://creativecommons.org/licenses/by-nc-nd/3.0/cz/%
+    }{%
+      \includegraphics[width = 0.15\textwidth]{%
+        cc_by_nc_nd.eps%      
+      }
+    }
+  
+  \vspace{0.2cm}
+  
+  \noindent Dílo lze dále svobodně šířit,
+    ovšem s~uvedením původního autora a s uvedením původní licence.
+    Dílo není možné šířit komerčně ani s ním jakkoliv jinak
+    nakládat pro účely komerčního zisku.
+    Dílo nesmí být jakkoliv upravováno.
+    Autor neručí za správnost informací uvedených
+    kdekoliv v předložené práci, přesto vynaložil nezanedbatelné
+    úsilí, aby byla uvedená fakta správná a aktuální, a práci
+    sepsal podle svého nejlepšího vědomí a svých "nejlepších"
+    znalostí problematiky.
+  
+}
+
+
+\clearpage
+\thispagestyle{empty}
+\clearpage
+
+
+\thispagestyle{empty}
+\tableofcontents
+
+\AddToShipoutPictureBG*{%
+  \AtPageLowerLeft{%
+    \hspace{\paperwidth}%
+    \raisebox{\baselineskip}{%
+      \makebox[0pt][r]{{\footnotesize Vysázeno pomocí \TeX-u, Bib\TeX-u a \textsf{YAML}-u.\quad}}
+}}}
+\thispagestyle{empty}
+
+
+
+\clearpage\mbox{}
+\thispagestyle{empty}
+\clearpage
+\pagenumbering{arabic}
+
+
+
+\section{Popis zvolené výseče světa –- zadání}
+
+Náboj je matematická soutěž pro týmy středoškoláků, které reprezentují své školy, [@math_naboj]. Soutěž se koná každoročně zhruba v polovině března v některé posluchárně budovy "M" Matematicko-fyzikální fakulty Univerzity Karlovy (na adrese Ke Karlovu 3, Praha 2).
+
+Soutěže se můžou zúčastnit týmy libovolné velikosti (i jednočlenné) z libovolné školy v České republice. U každého \framebox{týmu} evidujeme, jakou si zvolil přezdívku a z jaké byl vyslán školy, tj. jaké je IZO číslo této školy. Přezdívka týmu musí být unikátní. Dále nás zajímalo, zda (a jak) tým od prvního zúčastnění se soutěže preferuje proplácení jízdného (i kvůli časování přípravy potvrzení \mbox{o účasti} propříště). Může chtít ihned vystavovat potvrzení o účasti, nebo ho najisto odmítnout, nebo se vždy rozmyslet do týdne po konzultaci se školou.
+
+Evidujeme (podle IZO čísla) jenom ty školy, které vyslali alespoň jeden tým. Jedna škola může na soutěž vyslat více než jeden tým. \mbox{U škol} však kromě identifikace dané jednoznačným identifikačním číslem IZO jiné informace neevidujeme.
+
+Tým může být evidován již po přihlášení do soutěže, aniž by se ještě účastnil soutěže účastnil (ale je v tu chvíli v databázi již zaznamenán).
+
+U každého \framebox{člena} daného týmu nás zajímá jednoznačný, strojově přiřazený identifikátor, dále jeho jméno, příjmení a věk. Každý evidovaný účastník soutěže je členem právě jednoho týmu, každý tým má alespoň jednoho člena.
+
+Soutěž se koná jednou ročně a každý \framebox{ročník} má některé důležité vlastnosti -- zajímá nás, kdy přesně se konal (tedy datum ve formátu DD-MM-RRRR, kde dle předpokladu je \mbox{MM = 03}); dále je věcí zájmu, ve které posluchárně budovy "M" se přesně konal (posluchárny mají svá identifikační čísla) a jaký byl rozpočet ročníku. Pořadí ročníku je samo o sobě pro jeho identifikací plně postačující.
+
+Každého ročníku se účastní alespoň jeden tým (kdyby se neúčastnil ani jeden tým, daný ročník by byl zrušen -- takovou situaci lze ale empiricky vyloučit). Jeden tým se může účastnit více než jednoho ročníku soutěže.
+
+V rámci každého ročníku je soutěž garantována jednou nebo více katedrami Matematicko-fyzikální fakulty Univerzity Karlovy. V databázi jsou evidovány jen ty katedry, které alespoň jednou garantovaly některý z ročníků soutěže. Každá \framebox{katedra} může garantovat více ročníků soutěže. Katedra fakulty je vždy jednoznačně dána svou zkratkou; u katedry, která je v roli garanta, nás zajímá jméno a příjmení jejího zodpovědného pracovníka (za garanci soutěže), dále kontaktní telefonní číslo na tohoto zodpovědného pracovníka a nakonec i adresa katedry.
+
+\newpage
+
+
+\section{Konceptuální schéma reality}
+
+Na obrázku \ref{conceptual_schema} je konceptuální schéma reality výseče světa nastíněné v kapitole \textbf{1 Popis zvolené výseče světa –- zadání}. Je použita notace dle přednášek předmětu 4IT218 Databáze \mbox{v zimním} semestru akademického roku 2017--2018. Technicky jde o kombinaci modifikované původní konceptuální notace dle Chena [@Chen1976], modifikované notace dle Bachmana [@Song1995] a nakonec i IDEF1X notace [@Adelsberger1995].
+
+
+\bigskip
+
+\begin{figure}[H]
+\centering
+\begin{tikzpicture}
+  % entity a atributy
+  \node at (0,8) [rectangle, draw, minimum size = 2cm] (clen) {člen};
+    \node at (-3,7) [ellipse, draw, minimum size = 1cm] (id_clena) {ID člena};
+    \node at (-3,9) [ellipse, draw, minimum size = 1cm] (jmeno) {jméno};
+    \node at (-1,10) [ellipse, draw, minimum size = 1cm] (prijmeni) {příjmení};
+    \node at (1.5,10) [ellipse, draw, minimum size = 1cm] (vek) {věk};
+  \node at (8,8) [rectangle, draw, minimum size = 2cm] (tym) {tým};
+    \node at (11, 9) [ellipse, draw, minimum size = 1cm] (prezdivka) {přezdívka};
+    \node at (11, 7) [ellipse, draw, minimum size = 1cm] (izo_skoly) {IZO školy};
+    \node at (8, 10) [ellipse, draw, minimum size = 1cm] (proplacet_jizdne) {proplácet jízdné?};
+  \node at (0,0) [rectangle, draw, minimum size = 2cm] (rocnik) {ročník};
+    \node at (-3, 2) [ellipse, draw, minimum size = 1cm] (poradi) {pořadí};
+    \node at (-3, -2) [ellipse, draw, minimum size = 1cm] (datum) {datum};
+    \node at (-3.2, 0) [ellipse, draw, minimum size = 1cm] (poslucharna) {posluchárna};
+    \node at (0, -2) [ellipse, draw, minimum size = 1cm] (rozpocet) {rozpočet};
+  \node at (8,0) [rectangle, draw, minimum size = 2cm] (katedra) {katedra};
+    \node at (8, -2) [ellipse, draw, minimum size = 1cm] (zkratka) {zkratka};
+    \node at (11, -1) [ellipse, draw, minimum size = 1cm] (garant) {garant};
+    \node at (11, 1) [ellipse, draw, minimum size = 1cm] (telefon) {telefon};
+  % entitní vlastnosti
+  \node at (4,8) [diamond, draw, minimum size = 2cm] (je_soucasti) {je součástí};
+  \node at (4,4) [diamond, draw, minimum size = 2cm] (se_ucastnil) {se účastnil};
+  \node at (4,0) [diamond, draw, minimum size = 2cm] (garantovala) {garantovala};
+  % entitní vztahy
+  \draw[>=triangle 90, ->>] (je_soucasti) -- (clen);
+  \draw[>=triangle 90, ->] (je_soucasti) -- (tym);
+  \draw[>=triangle 90, ->>] (se_ucastnil) -- (tym);
+  \draw[dashed, >=triangle 90, ->>] (se_ucastnil) -- (rocnik);
+  \draw[>=triangle 90, ->>] (garantovala) -- (rocnik);
+  \draw[>=triangle 90, ->>] (garantovala) -- (katedra);
+  % vztahy entita -- atribut
+    % entita "clen"
+    \draw[>=triangle 90, ->] (clen) -- (id_clena);
+    \draw[dashed, >=triangle 90, ->] (id_clena.5) -- (clen.213);
+    \draw[>=triangle 90, ->] (clen) -- (jmeno);
+    \draw[>=triangle 90, ->] (clen) -- (prijmeni);
+    \draw[>=triangle 90, ->] (clen) -- (vek);
+    % entita "tym"
+    \draw[>=triangle 90, ->] (tym) -- (izo_skoly);
+    \draw[>=triangle 90, ->] (tym) -- (prezdivka);
+    \draw[dashed, >=triangle 90, ->] (prezdivka.223) -- (tym.3);
+    \draw[>=triangle 90, ->] (tym) -- (proplacet_jizdne);
+    % entita "rocnik"
+    \draw[>=triangle 90, ->] (rocnik) -- (poslucharna);
+    \draw[>=triangle 90, ->] (rocnik) -- (datum);
+    \draw[>=triangle 90, ->] (rocnik) -- (rozpocet);
+    \draw[>=triangle 90, ->] (rocnik) -- (poradi);
+    \draw[dashed, >=triangle 90, ->] (poradi.347) -- (rocnik.133);
+    % entita "katedra"
+    \draw[>=triangle 90, ->] (katedra) -- (telefon);
+    \draw[>=triangle 90, ->] (katedra) -- (garant);
+    \draw[>=triangle 90, ->] (katedra) -- (zkratka);
+    \draw[dashed, >=triangle 90, ->] (zkratka.122) -- (katedra.253);
+\end{tikzpicture}
+\vspace*{0.3cm}\caption{Konceptuální schéma reality zakreslené pomocí přednáškové notace. \label{conceptual_schema}}
+\end{figure}
+
+
+\newpage
+
+
+
+\section{Konceptuální datový model}
+
+Na obrázku \ref{konceptualni_model} je konceptuální datový model vygenerovaný CASE nástrojem PowerDesigner\textsuperscript{\textregistered}.
+
+\bigskip
+
+\begin{figure}[H]
+  \centering
+  \includegraphics[width = 1.0\hsize]{%
+    konceptualni_model.eps%
+  }
+  \vspace*{0.3cm}\caption{Konceptuální datový model vygenerovaný CASE nástrojem PowerDesigner\textsuperscript{\textregistered}. \label{konceptualni_model}}
+\end{figure}
+
+
+Snadno nahlédneme, že ve schématu na obrázku \ref{konceptualni_model} jsou celkem čtyři entity
+
+\begin{enumerate}[(i)]
+  \item \textit{člen} (se čtyřmi atributy),
+  \item \textit{tým} (se třemi atributy),
+  \item \textit{ročník} (se čtyřmi atributy),
+  \item \textit{katedra} (se třemi atributy)
+\end{enumerate}
+
+Současně jsou definovány tři vztahy mezi entitami, a sice
+
+\begin{enumerate}[(i)]
+  \item \textit{je součástí} mezi entitami \textit{člen} a \textit{tým} ($N:1$),
+  \item \textit{se účastnil} mezi entitami \textit{tým} a \textit{ročník} ($N:M$),
+  \item \textit{garantovala} mezi entitami \textit{ročník} a \textit{katedra} ($N:M$).
+\end{enumerate}
+
+
+\newpage
+
+
+
+\section{Dokumentace databáze}
+
+V následující sekci bude postupně dokumentována technická stránka databáze. Od fyzického datového modelu bude probrána definice relačních tabulek a přidružených objektů, integritních omezení, přístupových práv, eventuálně dalších databázových objektů.
+
+\subsection{Fyzický datový model}
+
+Na obrázku \ref{fyzicky_model} je fyzický datový model vygenerovaný CASE nástrojem PowerDesigner\textsuperscript{\textregistered}.
+
+\bigskip
+
+\begin{figure}[H]
+  \centering
+  \includegraphics[width = 1.0\hsize]{%
+    fyzicky_model.eps%
+  }
+  \vspace*{0.3cm}\caption{Fyzický datový model vygenerovaný CASE nástrojem PowerDesigner\textsuperscript{\textregistered}. \label{fyzicky_model}}
+\end{figure}
+
+
+
+
+
+\subsection{Definice relačních tabulek a souvisejících objektů}
+
+Zde je uveden veškerý SQL kód nutný pro definování databázových objektů a relací.
+
+\begin{lstlisting}[language = SQL, numbers = left]
+  /*============================================================*/
+  /* DBMS name:      ORACLE Version 10g                         */
+  /* Created on:     3.1.2018 15:17:22                          */
+  /* Generated by:   Lubomir Stepanek                           */
+  /*============================================================*/
+  
+  alter table CLEN
+     drop constraint FK_CLEN_JE_SOUCAS_TYM;
+  
+  alter table GARANTOVALA
+     drop constraint FK_GARANTOV_GARANTOVA_ROCNIK;
+  
+  alter table GARANTOVALA
+     drop constraint FK_GARANTOV_GARANTOVA_KATEDRA;
+  
+  alter table SE_UCASTNIL
+     drop constraint FK_SE_UCAST_SE_UCASTN_TYM;
+  
+  alter table SE_UCASTNIL
+     drop constraint FK_SE_UCAST_SE_UCASTN_ROCNIK;
+  
+  drop index JE_SOUCASTI_FK;
+  
+  drop table CLEN cascade constraints;
+  
+  drop index GARANTOVALA2_FK;
+  
+  drop index GARANTOVALA_FK;
+  
+  drop table GARANTOVALA cascade constraints;
+  
+  drop table KATEDRA cascade constraints;
+  
+  drop table ROCNIK cascade constraints;
+  
+  drop index SE_UCASTNIL2_FK;
+  
+  drop index SE_UCASTNIL_FK;
+  
+  drop table SE_UCASTNIL cascade constraints;
+  
+  drop table TYM cascade constraints;
+  
+  /*============================================================*/
+  /* Table: CLEN                                                */
+  /*============================================================*/
+  create table CLEN  (
+     ID_CLENA             VARCHAR2(20)                  not null,
+     PREZDIVKA            VARCHAR2(20)                  not null,
+     JMENO                VARCHAR2(20)                  not null,
+     PRIJMENI             VARCHAR2(20)                  not null,
+     VEK                  INTEGER                       not null
+       constraint CKC_VEK_CLEN check (VEK >= 0),
+     constraint PK_CLEN primary key (ID_CLENA)
+  );
+  
+  /*============================================================*/
+  /* Index: JE_SOUCASTI_FK                                      */
+  /*============================================================*/
+  create index JE_SOUCASTI_FK on CLEN (
+     PREZDIVKA ASC
+  );
+  
+  /*============================================================*/
+  /* Table: GARANTOVALA                                         */
+  /*============================================================*/
+  create table GARANTOVALA  (
+     PORADI               INTEGER                       not null,
+     ZKRATKA              VARCHAR2(8)                   not null,
+     constraint PK_GARANTOVALA primary key (PORADI, ZKRATKA)
+  );
+  
+  /*============================================================*/
+  /* Index: GARANTOVALA_FK                                      */
+  /*============================================================*/
+  create index GARANTOVALA_FK on GARANTOVALA (
+     PORADI ASC
+  );
+  
+  /*============================================================*/
+  /* Index: GARANTOVALA2_FK                                     */
+  /*============================================================*/
+  create index GARANTOVALA2_FK on GARANTOVALA (
+     ZKRATKA ASC
+  );
+  
+  /*============================================================*/
+  /* Table: KATEDRA                                             */
+  /*============================================================*/
+  create table KATEDRA  (
+     ZKRATKA              VARCHAR2(8)                   not null,
+     GARANT               VARCHAR2(40)                  not null,
+     TELEFON              VARCHAR2(10)                  not null,
+     constraint PK_KATEDRA primary key (ZKRATKA)
+  );
+  
+  /*============================================================*/
+  /* Table: ROCNIK                                              */
+  /*============================================================*/
+  create table ROCNIK  (
+     PORADI               INTEGER                       not null,
+     DATUM                DATE                          not null,
+     POSLUCHARNA          VARCHAR2(5)                   not null,
+     ROZPOCET             FLOAT(6)                      not null
+       constraint CKC_ROZPOCET_ROCNIK check (ROZPOCET >= 0),
+     constraint PK_ROCNIK primary key (PORADI)
+  );
+  
+  /*============================================================*/
+  /* Table: SE_UCASTNIL                                         */
+  /*============================================================*/
+  create table SE_UCASTNIL  (
+     PREZDIVKA            VARCHAR2(20)                  not null,
+     PORADI               INTEGER                       not null,
+     constraint PK_SE_UCASTNIL primary key (PREZDIVKA, PORADI)
+  );
+  
+  /*============================================================*/
+  /* Index: SE_UCASTNIL_FK                                      */
+  /*============================================================*/
+  create index SE_UCASTNIL_FK on SE_UCASTNIL (
+     PREZDIVKA ASC
+  );
+  
+  /*============================================================*/
+  /* Index: SE_UCASTNIL2_FK                                     */
+  /*============================================================*/
+  create index SE_UCASTNIL2_FK on SE_UCASTNIL (
+     PORADI ASC
+  );
+  
+  /*============================================================*/
+  /* Table: TYM                                                 */
+  /*============================================================*/
+  create table TYM  (
+     PREZDIVKA            VARCHAR2(20)                  not null,
+     IZO_SKOLY            INTEGER                       not null,
+     PROPLACET_JIZDNE     VARCHAR2(20)                  not null
+        constraint CKC_PROPLACET_JIZDNE_TYM check (
+          PROPLACET_JIZDNE in (
+            'ano_ihned',
+            'ne',
+            'potvrdime_do_tydne'
+          )
+        ),
+     constraint PK_TYM primary key (PREZDIVKA)
+  );
+  
+  alter table CLEN
+     add constraint FK_CLEN_JE_SOUCAS_TYM foreign key (
+       PREZDIVKA
+     )
+        references TYM (PREZDIVKA)
+        on delete cascade;
+  
+  alter table GARANTOVALA
+     add constraint FK_GARANTOV_GARANTOVA_ROCNIK foreign key (
+       PORADI
+     )
+        references ROCNIK (PORADI);
+  
+  alter table GARANTOVALA
+     add constraint FK_GARANTOV_GARANTOVA_KATEDRA foreign key (
+       ZKRATKA
+     )
+        references KATEDRA (ZKRATKA);
+  
+  alter table SE_UCASTNIL
+     add constraint FK_SE_UCAST_SE_UCASTN_TYM foreign key (
+       PREZDIVKA
+     )
+        references TYM (PREZDIVKA);
+  
+  alter table SE_UCASTNIL
+     add constraint FK_SE_UCAST_SE_UCASTN_ROCNIK foreign key (
+       PORADI
+     )
+        references ROCNIK (PORADI);
+  
+  
+  /*============================================================*/
+  /*============================================================*/
+  /*============================================================*/
+\end{lstlisting}
+
+
+
+
+
+
+\subsection{Integritní omezení}
+
+V následujících nadpisech je ponechána diakritika kvůli jejich snazšímu čtení. Příslušné relační tabulky jsou však ve cvičené databázi uloženy bez diakritiky.
+
+
+\subsubsection{Tabulka \texttt{ČLEN}}
+
+\textbf{\textit{Entitní integrita.}} Primární klíč tvoří atribut \texttt{ID\_cLENA}. SQL skript pro definici primárního klíče je
+
+\begin{lstlisting}[language = SQL, numbers = left]
+  constraint PK_CLEN primary key (ID_CLENA)
+\end{lstlisting}
+
+\textbf{\textit{Doménová integrita.}} Atribut \texttt{VEK} musí být nezáporné číslo. SQL skript pro definici tohoto omezení je
+
+\begin{lstlisting}[language = SQL, numbers = left]
+  constraint CKC_VEK_CLEN check (VEK >= 0)
+\end{lstlisting}
+
+\textbf{\textit{Referenční integrita.}} Tabulka je propojená pomocí cizího klíče \texttt{PREZDIVKA} s tabulkou \texttt{TYM}. SQL skript pro definici tohoto omezení je
+
+\begin{lstlisting}[language = SQL, numbers = left]
+  alter table CLEN
+    add constraint FK_CLEN_JE_SOUCAS_TYM foreign key (
+      PREZDIVKA
+    )
+      references TYM (PREZDIVKA)
+      on delete cascade;
+\end{lstlisting}
+
+
+
+
+\subsubsection{Tabulka \texttt{TÝM}}
+
+\textbf{\textit{Entitní integrita.}} Primární klíč tvoří atribut \texttt{PREZDIVKA}. SQL skript pro definici primárního klíče je
+
+\begin{lstlisting}[language = SQL, numbers = left]
+  constraint PK_TYM primary key (PREZDIVKA)
+\end{lstlisting}
+
+\textbf{\textit{Doménová integrita.}} Atribut \texttt{PROPLACET\_JIZDNE} nabývá pouze dvou možných hodnot: \texttt{ano}, \texttt{ne}. SQL skript pro definici tohoto omezení je
+
+\begin{lstlisting}[language = SQL, numbers = left]
+  constraint CKC_PROPLACET_JIZDNE_TYM check (
+    PROPLACET_JIZDNE in (
+      'ano_ihned',
+      'ne',
+      'potvrdime_do_tydne'
+    )
+  )
+\end{lstlisting}
+
+\textbf{\textit{Referenční integrita.}} Zde není definována.
+
+
+
+
+\subsubsection{Tabulka \texttt{ROČNÍK}}
+
+\textbf{\textit{Entitní integrita.}} Primární klíč tvoří atribut \texttt{PORADI}\footnote{Jde o pořadí daného ročníku soutěže v sekvenci každoročního konání. I přes název nemá atribut nic společného s "pořadím" týmu v soutěži -- takovou vlastnost v naší výseči reality neuvažujeme.}. SQL skript pro definici primárního klíče je
+
+\begin{lstlisting}[language = SQL, numbers = left]
+  constraint PK_ROCNIK primary key (PORADI)
+\end{lstlisting}
+
+\textbf{\textit{Doménová integrita.}} Atribut \texttt{ROZPOCET} musí být nezáporné číslo. SQL skript pro definici tohoto omezení je
+
+\begin{lstlisting}[language = SQL, numbers = left]
+  constraint CKC_ROZPOCET_ROCNIK check (ROZPOCET >= 0)
+\end{lstlisting}
+
+\textbf{\textit{Referenční integrita.}} Zde není definována.
+
+
+
+
+\subsubsection{Tabulka \texttt{KATEDRA}}
+
+\textbf{\textit{Entitní integrita.}} Primární klíč tvoří atribut \texttt{ZKRATKA}. SQL skript pro definici primárního klíče je
+
+\begin{lstlisting}[language = SQL, numbers = left]
+  constraint PK_KATEDRA primary key (ZKRATKA)
+\end{lstlisting}
+
+\textbf{\textit{Doménová integrita.}} Zde není definována.
+
+\textbf{\textit{Referenční integrita.}} Zde není definována.
+
+
+
+
+\subsubsection{Tabulka \texttt{SE\_ÚČASTNIL}}
+
+\textbf{\textit{Entitní integrita.}} Primární klíče tvoří atributy \texttt{PREZDIVKA} a \texttt{PORADI}. SQL skript pro definici primárního klíče je
+
+\begin{lstlisting}[language = SQL, numbers = left]
+  constraint PK_SE_UCASTNIL primary key (PREZDIVKA, PORADI)
+\end{lstlisting}
+
+\textbf{\textit{Doménová integrita.}} Zde není definována.
+
+\textbf{\textit{Referenční integrita.}} Tabulka je propojená pomocí klíče \texttt{PREZDIVKA} s tabulkou \texttt{TYM} \mbox{a pomocí} klíče \texttt{PORADI} s tabulkou \texttt{ROCNIK}. SQL skript pro definici tohoto omezení je
+
+\begin{lstlisting}[language = SQL, numbers = left]
+  alter table SE_UCASTNIL
+    add constraint FK_SE_UCAST_SE_UCASTN_TYM foreign key (
+      PREZDIVKA
+    )
+      references TYM (PREZDIVKA);
+
+  alter table SE_UCASTNIL
+    add constraint FK_SE_UCAST_SE_UCASTN_ROCNIK foreign key (
+      PORADI
+    )
+      references ROCNIK (PORADI);
+\end{lstlisting}
+
+
+
+
+\subsubsection{Tabulka \texttt{GARANTOVALA}}
+
+\textbf{\textit{Entitní integrita.}} Primární klíče tvoří atributy \texttt{PORADI} a \texttt{ZKRATKA}. SQL skript pro definici primárního klíče je
+
+\begin{lstlisting}[language = SQL, numbers = left]
+  constraint PK_GARANTOVALA primary key (PORADI, ZKRATKA)
+\end{lstlisting}
+
+\textbf{\textit{Doménová integrita.}} Zde není definována.
+
+\textbf{\textit{Referenční integrita.}} Tabulka je propojená pomocí klíče \texttt{PORADI} s tabulkou \texttt{ROCNIK} \mbox{a pomocí} klíče \texttt{ZKRATKA} s tabulkou \texttt{KATEDRA}. SQL skript pro definici tohoto omezení je
+
+\begin{lstlisting}[language = SQL, numbers = left]
+  alter table GARANTOVALA
+    add constraint FK_GARANTOV_GARANTOVA_ROCNIK foreign key (
+      PORADI
+    )
+      references ROCNIK (PORADI);
+
+  alter table GARANTOVALA
+    add constraint FK_GARANTOV_GARANTOVA_KATEDRA foreign key (
+      ZKRATKA
+    )
+      references KATEDRA (ZKRATKA);
+\end{lstlisting}
+
+
+
+
+
+
+\subsection{Definice přístupových práv}
+
+Zde uvádíme SQL příkazy, kterými byla definována přístupová práva k vloženým datům pro uživatele,
+
+\begin{enumerate}[(i)]
+
+  \item který je studentem (vyžaduje jen práva pro příkaz \texttt{SELECT})
+  
+  \begin{lstlisting}[language = SQL, numbers = left]
+  /*============================================================*/
+  /* Grant: STUDENT */
+  /*============================================================*/
+  
+  grant select on TYM to STUDENT;
+  grant select on CLEN to STUDENT;
+  grant select on ROCNIK to STUDENT;
+  grant select on KATEDRA to STUDENT;
+  grant select on SE_UCASTNIL to STUDENT;
+  grant select on GARANTOVALA to STUDENT;
+  
+  
+  /*============================================================*/
+  /*============================================================*/
+  /*============================================================*/
+  \end{lstlisting}
+  
+  \item který je správcem databází v rámci IT218  (vyžaduje práva pro příkazy a operace \texttt{SELECT}, \texttt{INSERT}, \texttt{UPDATE}, \texttt{DELETE})
+  
+  \begin{lstlisting}[language = SQL, numbers = left]
+  /*============================================================*/
+  /* Grant: IT218 */
+  /*============================================================*/
+  
+  grant select, update, insert, delete on TYM to IT218;
+  grant select, update, insert, delete on CLEN to IT218;
+  grant select, update, insert, delete on ROCNIK to IT218;
+  grant select, update, insert, delete on KATEDRA to IT218;
+  grant select, update, insert, delete on SE_UCASTNIL to IT218;
+  grant select, update, insert, delete on GARANTOVALA to IT218;
+  
+  
+  /*============================================================*/
+  /*============================================================*/
+  /*============================================================*/
+  \end{lstlisting}
+  
+  
+\end{enumerate}
+
+
+
+\newpage
+
+
+
+
+
+\section{Obsah databáze}
+
+V následující kapitole budou předvedeny příkazy pro populování databáze a rovněž tabulkové přehledy dat.
+
+
+
+\subsection{SQL příkazy pro naplnění databáze daty}
+
+\subsubsection{Tabulka \texttt{ČLEN}}
+
+\begin{lstlisting}[language = SQL, numbers = left]
+  INSERT INTO CLEN VALUES (
+    'XQbKQE1Rbb', 'Jaroška', 'Jaroslav', 'Auxt', '15'
+  );
+  INSERT INTO CLEN VALUES (
+    'gI6IYFdbJe', 'Jaroška', 'Júlia', 'Barabasová', '18'
+  );
+  INSERT INTO CLEN VALUES (
+    'TsKg4pePot', 'Jaroška', 'Dominika', 'Daxnerová', '16'
+  );
+  INSERT INTO CLEN VALUES (
+    'xbHXXIj0Sc', 'Jaroška', 'Terézia', 'Kotočová', '15'
+  );
+  INSERT INTO CLEN VALUES (
+    'h3wK82JE2F', 'Kepleráci', 'Veronika', 'Borýsková', '15'
+  );
+  INSERT INTO CLEN VALUES (
+    'NvdWiVf64A', 'Kepleráci', 'Štěpán', 'Šmíd', '15'
+  );
+  INSERT INTO CLEN VALUES (
+    'hgNzv7cW9L', 'Kepleráci', 'Josef', 'Minařík', '16'
+  );
+  INSERT INTO CLEN VALUES (
+    'cf61YbY2Tf', 'Kepleráci', 'Martin', 'Vodička', '15'
+  );
+  INSERT INTO CLEN VALUES (
+    '6PId3Xc63d', 'Dašák', 'Šimon', 'Hutař', '18'
+  );
+  INSERT INTO CLEN VALUES (
+    'raDTzzeBOK', 'Dašák', 'Hynek', 'Zamazal', '18'
+  );
+  INSERT INTO CLEN VALUES (
+    '2zdsY9H5En', 'Dašák', 'Tereza', 'Fremundová', '15'
+  );
+  INSERT INTO CLEN VALUES (
+    'Qu39vguy4l', 'Dašák', 'Kristýna', 'Zatloukalová', '18'
+  );
+  INSERT INTO CLEN VALUES (
+    '9wlaGzKW9u', 'black.squad', 'Vojtěch', 'Krobot', '15'
+  );
+  INSERT INTO CLEN VALUES (
+    'QcnjJnPsdB', 'black.squad', 'Kateřina', 'Válková', '18'
+  );
+  INSERT INTO CLEN VALUES (
+    'Zz3wHIMiMi', 'black.squad', 'Ondřej', 'Dehner', '15'
+  );
+  INSERT INTO CLEN VALUES (
+    'x2RNUYCy5Y', 'Antibabiš', 'Vít', 'Šimeček', '18'
+  );
+  INSERT INTO CLEN VALUES (
+    'XYORLkOXkV', 'Antibabiš', 'Dvořák', 'Michal', '16'
+  );
+  INSERT INTO CLEN VALUES (
+    '6LFq5nmKWi', 'calc.exe', 'Coufalík', 'Marek', '18'
+  );
+  INSERT INTO CLEN VALUES (
+    'ijEM25AGP0', 'calc.exe', 'Martinec', 'Pavel', '15'
+  );
+  INSERT INTO CLEN VALUES (
+    'u8I2aJ9eye', 'calc.exe', 'Chalabala', 'Lukáš', '18'
+  );
+  INSERT INTO CLEN VALUES (
+    'vxEErkLYBT', 'deadcat', 'Jana', 'Pallová', '15'
+  );
+  INSERT INTO CLEN VALUES (
+    'rcK6iRo3Xi', 'deadcat', 'Denisa', 'Chytilová', '18'
+  );
+  INSERT INTO CLEN VALUES (
+    'fcmK0BYke1', 'deadcat', 'Vítek', 'Horčička', '15'
+  );
+  INSERT INTO CLEN VALUES (
+    'yWS5qCj6fj', 'deadcat', 'Jaroslav', 'Hradil', '16'
+  );
+  INSERT INTO CLEN VALUES (
+    'epOG44xOn2', 'kaštani', 'Izabela', 'Peterková', '18'
+  );
+  INSERT INTO CLEN VALUES (
+    'g2pHueTPB1', 'kaštani', 'Natálie', 'Petrziková', '15'
+  );
+  INSERT INTO CLEN VALUES (
+    'CrA6AAMY4v', 'kaštani', 'Anna', 'Vlková', '15'
+  );
+  INSERT INTO CLEN VALUES (
+    'BR0PHuww37', 'kaštani', 'Sára', 'Hasíková', '15'
+  );
+  INSERT INTO CLEN VALUES (
+    'EvCJuLRdhm', 'muffins', 'Anastasiya', 'Yuskovets', '18'
+  );
+  INSERT INTO CLEN VALUES (
+    'kCpcE0Ojv1', 'muffins', 'Dorota', 'Galátová', '15'
+  );
+  INSERT INTO CLEN VALUES (
+    'CA6WvEhi0G', 'muffins', 'Markéta', 'Mičankova', '15'
+  );
+  INSERT INTO CLEN VALUES (
+    'lWPwMAR2u1', 'muffins', 'Tereza', 'Novotná', '19'
+  );
+  INSERT INTO CLEN VALUES (
+    'XsTyVluXOC', 'muffins', 'Ondřej', 'Peterka', '15'
+  );
+  INSERT INTO CLEN VALUES (
+    'Gv9ZjddGny', 'prvočísla', 'Jana', 'Bušová', '16'
+  );
+  INSERT INTO CLEN VALUES (
+    'l8rPtIqtbR', 'prvočísla', 'Oliver', 'šimoník', '18'
+  );
+  INSERT INTO CLEN VALUES (
+    'eQgHQw48Sj', 'prvočísla', 'Zdeněk', 'Pezlar', '18'
+  );
+  INSERT INTO CLEN VALUES (
+    'bPCfx1WM59', 'prvočísla', 'Andrea', 'Lorkova', '16'
+  );
+\end{lstlisting}
+
+
+
+
+\subsubsection{Tabulka \texttt{TÝM}}
+
+\begin{lstlisting}[language = SQL, numbers = left]
+  INSERT INTO TYM VALUES (
+    'Jaroška', '111', 'ano_ihned'
+  );
+  INSERT INTO TYM VALUES (
+    'Kepleráci', '222', 'ne'
+  );
+  INSERT INTO TYM VALUES (
+    'Dašák', '333', 'ano_ihned'
+  );
+  INSERT INTO TYM VALUES (
+    'black.squad', '444', 'ano_ihned'
+  );
+  INSERT INTO TYM VALUES (
+    'Antibabiš', '555', 'potvrdime_do_tydne'
+  );
+  INSERT INTO TYM VALUES (
+    'calc.exe', '666', 'ne'
+  );
+  INSERT INTO TYM VALUES (
+    'deadcat', '777', 'ano_ihned'
+  );
+  INSERT INTO TYM VALUES (
+    'kaštani', '888', 'ne'
+  );
+  INSERT INTO TYM VALUES (
+    'muffins', '999', 'potvrdime_do_tydne'
+  );
+  INSERT INTO TYM VALUES (
+    'prvočísla', '101010', 'ano_ihned'
+  );
+\end{lstlisting}
+
+
+
+
+\subsubsection{Tabulka \texttt{ROČNÍK}}
+
+\begin{lstlisting}[language = SQL, numbers = left]
+  INSERT INTO ROCNIK VALUES ('1', '23-03-2015', 'M1', '10000');
+  INSERT INTO ROCNIK VALUES ('2', '20-03-2016', 'M1', '15000');
+  INSERT INTO ROCNIK VALUES ('3', '15-03-2017', 'M2', '20000');
+\end{lstlisting}
+
+
+
+
+
+\subsubsection{Tabulka \texttt{KATEDRA}}
+
+\begin{lstlisting}[language = SQL, numbers = left]
+  INSERT INTO KATEDRA VALUES (
+    'KAM', 'Martin Loebl', '333444555'
+  );
+  INSERT INTO KATEDRA VALUES (
+    'KPMS', 'Jiří Anděl', '101101101'
+  );
+  INSERT INTO KATEDRA VALUES (
+    'KDM', 'Jarmila Robová', '999888777'
+  );
+\end{lstlisting}
+
+
+
+
+\subsubsection{Tabulka \texttt{SE\_ÚČASTNIL}}
+
+\begin{lstlisting}[language = SQL, numbers = left]
+  INSERT INTO SE_UCASTNIL VALUES ('Jaroška', '1');
+  INSERT INTO SE_UCASTNIL VALUES ('Jaroška', '2');
+  INSERT INTO SE_UCASTNIL VALUES ('Jaroška', '3');
+  INSERT INTO SE_UCASTNIL VALUES ('Kepleráci', '1');
+  INSERT INTO SE_UCASTNIL VALUES ('Kepleráci', '2');
+  INSERT INTO SE_UCASTNIL VALUES ('Kepleráci', '3');
+  INSERT INTO SE_UCASTNIL VALUES ('Dašák', '2');
+  INSERT INTO SE_UCASTNIL VALUES ('Dašák', '3');
+  INSERT INTO SE_UCASTNIL VALUES ('black.squad', '1');
+  INSERT INTO SE_UCASTNIL VALUES ('Antibabiš', '3');
+  INSERT INTO SE_UCASTNIL VALUES ('calc.exe', '2');
+  INSERT INTO SE_UCASTNIL VALUES ('calc.exe', '3');
+  INSERT INTO SE_UCASTNIL VALUES ('deadcat', '1');
+  INSERT INTO SE_UCASTNIL VALUES ('deadcat', '2');
+  INSERT INTO SE_UCASTNIL VALUES ('kaštani', '1');
+  INSERT INTO SE_UCASTNIL VALUES ('kaštani', '3');
+  INSERT INTO SE_UCASTNIL VALUES ('muffins', '1');
+  INSERT INTO SE_UCASTNIL VALUES ('muffins', '2');
+  INSERT INTO SE_UCASTNIL VALUES ('prvočísla', '1');
+  INSERT INTO SE_UCASTNIL VALUES ('prvočísla', '2');
+  INSERT INTO SE_UCASTNIL VALUES ('prvočísla', '3');
+\end{lstlisting}
+
+
+
+
+\subsubsection{Tabulka \texttt{GARANTOVALA}}
+
+\begin{lstlisting}[language = SQL, numbers = left]
+  INSERT INTO GARANTOVALA VALUES ('1', 'KAM');
+  INSERT INTO GARANTOVALA VALUES ('2', 'KAM');
+  INSERT INTO GARANTOVALA VALUES ('2', 'KPMS');
+  INSERT INTO GARANTOVALA VALUES ('3', 'KAM');
+  INSERT INTO GARANTOVALA VALUES ('3', 'KPMS');
+  INSERT INTO GARANTOVALA VALUES ('3', 'KDM');
+\end{lstlisting}
+
+
+
+
+
+\subsection{Opis vložených dat}
+
+
+
+\begin{table}[H]
+  \centering
+  \begin{tabular}{llllr}
+  \hline
+  ID\_CLENA & PREZDIVKA & JMENO & PRIJMENI & VEK \\ 
+  \hline
+  XQbKQE1Rbb & Jaroška & Jaroslav & Auxt & 15 \\ 
+  gI6IYFdbJe & Jaroška & Júlia & Barabasová & 18 \\ 
+  TsKg4pePot & Jaroška & Dominika & Daxnerová & 16 \\ 
+  xbHXXIj0Sc & Jaroška & Terézia & Kotočová & 15 \\ 
+  h3wK82JE2F & Kepleráci & Veronika & Borýsková & 15 \\ 
+  NvdWiVf64A & Kepleráci & Štěpán & Šmíd & 15 \\ 
+  hgNzv7cW9L & Kepleráci & Josef & Minařík & 16 \\ 
+  cf61YbY2Tf & Kepleráci & Martin & Vodička & 15 \\ 
+  6PId3Xc63d & Dašák & Šimon & Hutař & 18 \\ 
+  raDTzzeBOK & Dašák & Hynek & Zamazal & 18 \\ 
+  2zdsY9H5En & Dašák & Tereza & Fremundová & 15 \\ 
+  Qu39vguy4l & Dašák & Kristýna & Zatloukalová & 18 \\ 
+  9wlaGzKW9u & black.squad & Vojtěch & Krobot & 15 \\ 
+  QcnjJnPsdB & black.squad & Kateřina & Válková & 18 \\ 
+  Zz3wHIMiMi & black.squad & Ondřej & Dehner & 15 \\ 
+  x2RNUYCy5Y & Antibabiš & Vít & Šimeček & 18 \\ 
+  XYORLkOXkV & Antibabiš & Dvořák & Michal & 16 \\ 
+  6LFq5nmKWi & calc.exe & Coufalík & Marek & 18 \\ 
+  ijEM25AGP0 & calc.exe & Martinec & Pavel & 15 \\ 
+  u8I2aJ9eye & calc.exe & Chalabala & Lukáš & 18 \\ 
+  vxEErkLYBT & deadcat & Jana & Pallová & 15 \\ 
+  rcK6iRo3Xi & deadcat & Denisa & Chytilová & 18 \\ 
+  fcmK0BYke1 & deadcat & Vítek & Horčička & 15 \\ 
+  yWS5qCj6fj & deadcat & Jaroslav & Hradil & 16 \\ 
+  epOG44xOn2 & kaštani & Izabela & Peterková & 18 \\ 
+  g2pHueTPB1 & kaštani & Natálie & Petrziková & 15 \\ 
+  CrA6AAMY4v & kaštani & Anna & Vlková & 15 \\ 
+  BR0PHuww37 & kaštani & Sára & Hasíková & 15 \\ 
+  EvCJuLRdhm & muffins & Anastasiya & Yuskovets & 18 \\ 
+  kCpcE0Ojv1 & muffins & Dorota & Galátová & 15 \\ 
+  CA6WvEhi0G & muffins & Markéta & Mičankova & 15 \\ 
+  lWPwMAR2u1 & muffins & Tereza & Novotná & 19 \\ 
+  XsTyVluXOC & muffins & Ondřej & Peterka & 15 \\ 
+  Gv9ZjddGny & prvočísla & Jana & Bušová & 16 \\ 
+  l8rPtIqtbR & prvočísla & Oliver & šimoník & 18 \\ 
+  eQgHQw48Sj & prvočísla & Zdeněk & Pezlar & 18 \\ 
+  bPCfx1WM59 & prvočísla & Andrea & Ľorkova & 16 \\
+  \hline
+  \end{tabular}
+  \caption{Relační tabulka \texttt{CLEN}. \label{CLEN}}
+\end{table}
+
+
+V tabulkách \ref{CLEN}, \ref{TYM}, \ref{ROCNIK}, \ref{KATEDRA}, \ref{GARANTOVALA} a \ref{SE_UCASTNIL} jsou uvedeny jednotlivé relační tabulky, kterými byla populována zkoušková databáze.
+
+
+\begin{table}[H]
+  \centering
+  \begin{tabular}{llr}
+  \hline
+  PREZDIVKA & IZO\_SKOLY & PROPLACET\_JIZDNE \\ 
+  \hline
+  Jaroška & 111 & ano\_ihned \\ 
+  Kepleráci & 222 & ne \\ 
+  Dašák & 333 & ano\_ihned \\ 
+  black.squad & 444 & ano\_ihned \\ 
+  Antibabiš & 555 & potvrdime\_do\_tydne \\ 
+  calc.exe & 666 & ne \\ 
+  deadcat & 777 & ano\_ihned \\ 
+  kaštani & 888 & ne \\ 
+  muffins & 999 & potvrdime\_do\_tydne \\ 
+  prvočísla & 101010 & ano\_ihned \\
+  \hline
+  \end{tabular}
+  \caption{Relační tabulka \texttt{TYM}. \label{TYM}}
+\end{table}
+  
+
+
+
+\begin{table}[H]
+  \centering
+  \begin{tabular}{lllr}
+  \hline
+  PORADI & DATUM & POSLUCHARNA & ROZPOCET \\ 
+  \hline
+  1 & 23-03-2015 & M1 & 10000 \\ 
+  2 & 20-03-2016 & M1 & 15000 \\ 
+  3 & 15-03-2017 & M2 & 20000 \\
+  \hline
+  \end{tabular}
+  \caption{Relační tabulka \texttt{ROCNIK}. \label{ROCNIK}}
+\end{table}
+
+
+
+
+
+\begin{table}[H]
+  \centering
+  \begin{tabular}{llr}
+  \hline
+  ZKRATKA & GARANT & TELEFON \\ 
+  \hline
+  KAM & Martin Loebl & 333444555 \\ 
+  KPMS & Jiří Anděl & 101101101 \\ 
+  KDM & Jarmila Robová & 999888777 \\
+  \hline
+  \end{tabular}
+  \caption{Relační tabulka \texttt{KATEDRA}. \label{KATEDRA}}
+\end{table}
+
+
+
+
+
+\begin{table}[H]
+  \centering
+  \begin{tabular}{lr}
+  \hline
+  PORADI & ZKRATKA \\ 
+  \hline
+  1 & KAM \\ 
+  2 & KAM \\ 
+  2 & KPMS \\ 
+  3 & KAM \\ 
+  3 & KPMS \\ 
+  3 & KDM \\
+  \hline
+  \end{tabular}
+  \caption{Relační tabulka \texttt{GARANTOVALA}. \label{GARANTOVALA}}
+\end{table}
+
+
+
+
+\begin{table}[H]
+  \centering
+  \begin{tabular}{lr}
+  \hline
+  PREZDIVKA & PORADI \\ 
+  \hline
+  Jaroška & 1 \\ 
+  Jaroška & 2 \\ 
+  Jaroška & 3 \\ 
+  Kepleráci & 1 \\ 
+  Kepleráci & 2 \\ 
+  Kepleráci & 3 \\ 
+  Dašák & 2 \\ 
+  Dašák & 3 \\ 
+  black.squad & 1 \\ 
+  Antibabiš & 3 \\ 
+  calc.exe & 2 \\ 
+  calc.exe & 3 \\ 
+  deadcat & 1 \\ 
+  deadcat & 2 \\ 
+  kaštani & 1 \\ 
+  kaštani & 3 \\ 
+  muffins & 1 \\ 
+  muffins & 2 \\ 
+  prvočísla & 1 \\ 
+  prvočísla & 2 \\ 
+  prvočísla & 3 \\
+  \hline
+  \end{tabular}
+  \caption{Relační tabulka \texttt{SE\_UCASTNIL}. \label{SE_UCASTNIL}}
+\end{table}
+
+
+
+
+
+
+
+\newpage
+
+
+
+\section{Reference}
+
+\setlength{\parindent}{0.00cm}
+\setlength{\parskip}{0.35cm}
+
+\printbibliography
+
+
+
+
+

@@ -1,0 +1,103 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no" ?>
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
+<svg width="156mm" xmlns="http://www.w3.org/2000/svg" height="56mm" version="1.1" viewBox="0 0 592 215" xmlns:xlink="http://www.w3.org/1999/xlink">
+   <polyline fill="none" points="231,41 318,41" stroke="#00aaaa" stroke-width="1"/>
+   <polyline fill="none" points="218,32 244,41 218,50 218,32" stroke="#00aaaa" stroke-width="1"/>
+   <polyline fill="none" points="244,46 244,35" stroke="#00aaaa" stroke-width="1"/>
+   <polyline fill="none" points="304,35 304,46" stroke="#00aaaa" stroke-width="1"/>
+   <text x="277" y="31" fill="#000000" font-size="10" font-family="'Arial Unicode MS','Arial'" text-anchor="middle">je součástí</text>
+   <polyline fill="none" points="319,66 256,126 239,140" stroke="#00aaaa" stroke-width="1"/>
+   <polyline fill="none" points="335,63 310,75 322,50 335,63" stroke="#00aaaa" stroke-width="1"/>
+   <polyline fill="none" points="306,71 313,79" stroke="#00aaaa" stroke-width="1"/>
+   <polyline fill="none" points="223,141 250,132 235,156 223,141" stroke="#00aaaa" stroke-width="1"/>
+   <ellipse cx="252" cy="129" rx="3" ry="3" fill="#ffffff" stroke="#00aaaa" stroke-width="1"/>
+   <text x="276" y="79" fill="#000000" font-size="10" font-family="'Arial Unicode MS','Arial'" text-anchor="middle">se účastnil</text>
+   <polyline fill="none" points="243,175 363,175" stroke="#00aaaa" stroke-width="1"/>
+   <polyline fill="none" points="230,165 256,175 230,184 230,165" stroke="#00aaaa" stroke-width="1"/>
+   <polyline fill="none" points="256,180 256,169" stroke="#00aaaa" stroke-width="1"/>
+   <polyline fill="none" points="376,184 350,175 376,165 376,184" stroke="#00aaaa" stroke-width="1"/>
+   <polyline fill="none" points="350,169 350,180" stroke="#00aaaa" stroke-width="1"/>
+   <text x="301" y="167" fill="#000000" font-size="10" font-family="'Arial Unicode MS','Arial'" text-anchor="middle">garantovala</text>
+   <defs>
+      <linearGradient id="Gradient1" x1="0%" x2="100%" y1="0%" y2="100%" gradientUnits="objectBoundingBox">
+         <stop offset="5%" stop-color="#ffffff"/>
+         <stop offset="95%" stop-color="#b0ffff"/>
+      </linearGradient>
+   </defs>
+   <rect x="2" y="2" fill="url(#Gradient1)" width="229" height="73" stroke="#00aaaa" stroke-width="1"/>
+   <text x="116" y="13" fill="#000000" font-size="10" font-family="'Arial Unicode MS','Arial'" text-anchor="middle">ČLEN</text>
+   <line x1="2" x2="231" y1="19" y2="19" stroke="#00aaaa" stroke-width="1"/>
+   <text x="7" y="29" fill="#000000" font-size="10" font-family="'Arial Unicode MS','Arial'" text-decoration="underline">ID člena</text>
+   <text x="7" y="42" fill="#000000" font-size="10" font-family="'Arial Unicode MS','Arial'">jméno</text>
+   <text x="7" y="55" fill="#000000" font-size="10" font-family="'Arial Unicode MS','Arial'">příjmení</text>
+   <text x="7" y="68" fill="#000000" font-size="10" font-family="'Arial Unicode MS','Arial'">věk</text>
+   <text x="55" y="29" fill="#000000" font-size="10" font-family="'Arial Unicode MS','Arial'" text-decoration="underline">&lt;pi&gt;</text>
+   <text x="84" y="29" fill="#000000" font-size="10" font-family="'Arial Unicode MS','Arial'" text-decoration="underline">Variable characters (20)</text>
+   <text x="84" y="42" fill="#000000" font-size="10" font-family="'Arial Unicode MS','Arial'">Variable characters (20)</text>
+   <text x="84" y="55" fill="#000000" font-size="10" font-family="'Arial Unicode MS','Arial'">Variable characters (20)</text>
+   <text x="84" y="68" fill="#000000" font-size="10" font-family="'Arial Unicode MS','Arial'">Integer</text>
+   <text x="203" y="29" fill="#000000" font-size="10" font-family="'Arial Unicode MS','Arial'" text-decoration="underline">&lt;M&gt;</text>
+   <text x="203" y="42" fill="#000000" font-size="10" font-family="'Arial Unicode MS','Arial'">&lt;M&gt;</text>
+   <text x="203" y="55" fill="#000000" font-size="10" font-family="'Arial Unicode MS','Arial'">&lt;M&gt;</text>
+   <text x="203" y="68" fill="#000000" font-size="10" font-family="'Arial Unicode MS','Arial'">&lt;M&gt;</text>
+   <defs>
+      <linearGradient id="Gradient2" x1="0%" x2="100%" y1="0%" y2="100%" gradientUnits="objectBoundingBox">
+         <stop offset="5%" stop-color="#ffffff"/>
+         <stop offset="95%" stop-color="#b0ffff"/>
+      </linearGradient>
+   </defs>
+   <rect x="318" y="6" fill="url(#Gradient2)" width="272" height="60" stroke="#00aaaa" stroke-width="1"/>
+   <text x="454" y="17" fill="#000000" font-size="10" font-family="'Arial Unicode MS','Arial'" text-anchor="middle">TÝM</text>
+   <line x1="318" x2="590" y1="23" y2="23" stroke="#00aaaa" stroke-width="1"/>
+   <text x="322" y="33" fill="#000000" font-size="10" font-family="'Arial Unicode MS','Arial'" text-decoration="underline">přezdívka</text>
+   <text x="322" y="46" fill="#000000" font-size="10" font-family="'Arial Unicode MS','Arial'">IZO školy</text>
+   <text x="322" y="59" fill="#000000" font-size="10" font-family="'Arial Unicode MS','Arial'">proplácet jízdné?</text>
+   <text x="412" y="33" fill="#000000" font-size="10" font-family="'Arial Unicode MS','Arial'" text-decoration="underline">&lt;pi&gt;</text>
+   <text x="441" y="33" fill="#000000" font-size="10" font-family="'Arial Unicode MS','Arial'" text-decoration="underline">Variable characters (20)</text>
+   <text x="441" y="46" fill="#000000" font-size="10" font-family="'Arial Unicode MS','Arial'">Integer</text>
+   <text x="441" y="59" fill="#000000" font-size="10" font-family="'Arial Unicode MS','Arial'">Variable characters (20)</text>
+   <text x="560" y="33" fill="#000000" font-size="10" font-family="'Arial Unicode MS','Arial'" text-decoration="underline">&lt;M&gt;</text>
+   <text x="560" y="46" fill="#000000" font-size="10" font-family="'Arial Unicode MS','Arial'">&lt;M&gt;</text>
+   <text x="560" y="59" fill="#000000" font-size="10" font-family="'Arial Unicode MS','Arial'">&lt;M&gt;</text>
+   <defs>
+      <linearGradient id="Gradient3" x1="0%" x2="100%" y1="0%" y2="100%" gradientUnits="objectBoundingBox">
+         <stop offset="5%" stop-color="#ffffff"/>
+         <stop offset="95%" stop-color="#b0ffff"/>
+      </linearGradient>
+   </defs>
+   <rect x="3" y="140" fill="url(#Gradient3)" width="240" height="73" stroke="#00aaaa" stroke-width="1"/>
+   <text x="123" y="151" fill="#000000" font-size="10" font-family="'Arial Unicode MS','Arial'" text-anchor="middle">ROČNÍK</text>
+   <line x1="3" x2="243" y1="157" y2="157" stroke="#00aaaa" stroke-width="1"/>
+   <text x="7" y="167" fill="#000000" font-size="10" font-family="'Arial Unicode MS','Arial'" text-decoration="underline">pořadí</text>
+   <text x="7" y="180" fill="#000000" font-size="10" font-family="'Arial Unicode MS','Arial'">datum</text>
+   <text x="7" y="193" fill="#000000" font-size="10" font-family="'Arial Unicode MS','Arial'">posluchárna</text>
+   <text x="7" y="206" fill="#000000" font-size="10" font-family="'Arial Unicode MS','Arial'">rozpočet</text>
+   <text x="72" y="167" fill="#000000" font-size="10" font-family="'Arial Unicode MS','Arial'" text-decoration="underline">&lt;pi&gt;</text>
+   <text x="101" y="167" fill="#000000" font-size="10" font-family="'Arial Unicode MS','Arial'" text-decoration="underline">Integer</text>
+   <text x="101" y="180" fill="#000000" font-size="10" font-family="'Arial Unicode MS','Arial'">Date</text>
+   <text x="101" y="193" fill="#000000" font-size="10" font-family="'Arial Unicode MS','Arial'">Variable characters (5)</text>
+   <text x="101" y="206" fill="#000000" font-size="10" font-family="'Arial Unicode MS','Arial'">Float (6)</text>
+   <text x="214" y="167" fill="#000000" font-size="10" font-family="'Arial Unicode MS','Arial'" text-decoration="underline">&lt;M&gt;</text>
+   <text x="214" y="180" fill="#000000" font-size="10" font-family="'Arial Unicode MS','Arial'">&lt;M&gt;</text>
+   <text x="214" y="193" fill="#000000" font-size="10" font-family="'Arial Unicode MS','Arial'">&lt;M&gt;</text>
+   <text x="214" y="206" fill="#000000" font-size="10" font-family="'Arial Unicode MS','Arial'">&lt;M&gt;</text>
+   <defs>
+      <linearGradient id="Gradient4" x1="0%" x2="100%" y1="0%" y2="100%" gradientUnits="objectBoundingBox">
+         <stop offset="5%" stop-color="#ffffff"/>
+         <stop offset="95%" stop-color="#b0ffff"/>
+      </linearGradient>
+   </defs>
+   <rect x="363" y="144" fill="url(#Gradient4)" width="222" height="60" stroke="#00aaaa" stroke-width="1"/>
+   <text x="474" y="155" fill="#000000" font-size="10" font-family="'Arial Unicode MS','Arial'" text-anchor="middle">KATEDRA</text>
+   <line x1="363" x2="585" y1="161" y2="161" stroke="#00aaaa" stroke-width="1"/>
+   <text x="368" y="171" fill="#000000" font-size="10" font-family="'Arial Unicode MS','Arial'" text-decoration="underline">zkratka</text>
+   <text x="368" y="184" fill="#000000" font-size="10" font-family="'Arial Unicode MS','Arial'">garant</text>
+   <text x="368" y="197" fill="#000000" font-size="10" font-family="'Arial Unicode MS','Arial'">telefon</text>
+   <text x="409" y="171" fill="#000000" font-size="10" font-family="'Arial Unicode MS','Arial'" text-decoration="underline">&lt;pi&gt;</text>
+   <text x="438" y="171" fill="#000000" font-size="10" font-family="'Arial Unicode MS','Arial'" text-decoration="underline">Variable characters (8)</text>
+   <text x="438" y="184" fill="#000000" font-size="10" font-family="'Arial Unicode MS','Arial'">Variable characters (40)</text>
+   <text x="438" y="197" fill="#000000" font-size="10" font-family="'Arial Unicode MS','Arial'">Variable characters (10)</text>
+   <text x="557" y="171" fill="#000000" font-size="10" font-family="'Arial Unicode MS','Arial'" text-decoration="underline">&lt;M&gt;</text>
+   <text x="557" y="184" fill="#000000" font-size="10" font-family="'Arial Unicode MS','Arial'">&lt;M&gt;</text>
+   <text x="557" y="197" fill="#000000" font-size="10" font-family="'Arial Unicode MS','Arial'">&lt;M&gt;</text>
+</svg>

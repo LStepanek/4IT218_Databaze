@@ -1,0 +1,10 @@
+INSERT INTO TYM VALUES ('Jaroška', '111', 'ano_ihned');
+INSERT INTO TYM VALUES ('Kepleráci', '222', 'ne');
+INSERT INTO TYM VALUES ('Dašák', '333', 'ano_ihned');
+INSERT INTO TYM VALUES ('black.squad', '444', 'ano_ihned');
+INSERT INTO TYM VALUES ('Antibabiš', '555', 'potvrdime_do_tydne');
+INSERT INTO TYM VALUES ('calc.exe', '666', 'ne');
+INSERT INTO TYM VALUES ('deadcat', '777', 'ano_ihned');
+INSERT INTO TYM VALUES ('kaštani', '888', 'ne');
+INSERT INTO TYM VALUES ('muffins', '999', 'potvrdime_do_tydne');
+INSERT INTO TYM VALUES ('prvoèísla', '101010', 'ano_ihned');

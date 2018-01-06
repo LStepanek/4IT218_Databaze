@@ -1,0 +1,121 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no" ?>
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
+<svg width="116mm" xmlns="http://www.w3.org/2000/svg" height="67mm" version="1.1" viewBox="0 0 440 254" xmlns:xlink="http://www.w3.org/1999/xlink">
+   <polyline fill="none" points="182,43 208,43" stroke="#00aaaa" stroke-width="1"/>
+   <polygon fill="#00aaaa" points="208,43 195,46 195,40" stroke="#00aaaa" stroke-width="1" stroke-linejoin="miter"/>
+   <polyline fill="none" points="335,106 335,89 219,89 219,62" stroke="#00aaaa" stroke-width="1"/>
+   <polygon fill="#00aaaa" points="220,62 223,75 217,76" stroke="#00aaaa" stroke-width="1" stroke-linejoin="miter"/>
+   <polyline fill="none" points="237,141 219,141 219,131 196,131" stroke="#00aaaa" stroke-width="1"/>
+   <polygon fill="#00aaaa" points="196,131 209,128 209,134" stroke="#00aaaa" stroke-width="1" stroke-linejoin="miter"/>
+   <polyline fill="none" points="101,199 101,176" stroke="#00aaaa" stroke-width="1"/>
+   <polygon fill="#00aaaa" points="101,176 104,189 98,189" stroke="#00aaaa" stroke-width="1" stroke-linejoin="miter"/>
+   <polyline fill="none" points="184,223 260,223" stroke="#00aaaa" stroke-width="1"/>
+   <polygon fill="#00aaaa" points="260,223 246,226 246,220" stroke="#00aaaa" stroke-width="1" stroke-linejoin="miter"/>
+   <rect x="2" y="2" fill="#ffffff" width="0" height="0" stroke="none" stroke-width="0"/>
+   <defs>
+      <linearGradient id="Gradient1" x1="0%" x2="100%" y1="0%" y2="100%" gradientUnits="objectBoundingBox">
+         <stop offset="5%" stop-color="#ffffff"/>
+         <stop offset="95%" stop-color="#b0ffff"/>
+      </linearGradient>
+   </defs>
+   <rect x="2" y="2" fill="url(#Gradient1)" width="180" height="86" stroke="#00aaaa" stroke-width="1"/>
+   <text x="92" y="13" fill="#000000" font-size="10" font-family="'Arial Unicode MS','Arial'" text-anchor="middle">ČLEN</text>
+   <line x1="2" x2="182" y1="19" y2="19" stroke="#00aaaa" stroke-width="1"/>
+   <text x="7" y="29" fill="#000000" font-size="10" font-family="'Arial Unicode MS','Arial'" text-decoration="underline">ID ČLENA</text>
+   <text x="7" y="42" fill="#000000" font-size="10" font-family="'Arial Unicode MS','Arial'">PŘEZDÍVKA</text>
+   <text x="7" y="55" fill="#000000" font-size="10" font-family="'Arial Unicode MS','Arial'">JMÉNO</text>
+   <text x="7" y="68" fill="#000000" font-size="10" font-family="'Arial Unicode MS','Arial'">PŘÍJMENÍ</text>
+   <text x="7" y="81" fill="#000000" font-size="10" font-family="'Arial Unicode MS','Arial'">VĚK</text>
+   <text x="73" y="29" fill="#000000" font-size="10" font-family="'Arial Unicode MS','Arial'" text-decoration="underline">VARCHAR2(20)</text>
+   <text x="73" y="42" fill="#000000" font-size="10" font-family="'Arial Unicode MS','Arial'">VARCHAR2(20)</text>
+   <text x="73" y="55" fill="#000000" font-size="10" font-family="'Arial Unicode MS','Arial'">VARCHAR2(20)</text>
+   <text x="73" y="68" fill="#000000" font-size="10" font-family="'Arial Unicode MS','Arial'">VARCHAR2(20)</text>
+   <text x="73" y="81" fill="#000000" font-size="10" font-family="'Arial Unicode MS','Arial'">INTEGER</text>
+   <text x="154" y="29" fill="#000000" font-size="10" font-family="'Arial Unicode MS','Arial'" text-decoration="underline">&lt;pk&gt;</text>
+   <text x="154" y="42" fill="#000000" font-size="10" font-family="'Arial Unicode MS','Arial'">&lt;fk&gt;</text>
+   <rect x="208" y="2" fill="#ffffff" width="0" height="0" stroke="none" stroke-width="0"/>
+   <defs>
+      <linearGradient id="Gradient2" x1="0%" x2="100%" y1="0%" y2="100%" gradientUnits="objectBoundingBox">
+         <stop offset="5%" stop-color="#ffffff"/>
+         <stop offset="95%" stop-color="#b0ffff"/>
+      </linearGradient>
+   </defs>
+   <rect x="208" y="2" fill="url(#Gradient2)" width="230" height="60" stroke="#00aaaa" stroke-width="1"/>
+   <text x="323" y="13" fill="#000000" font-size="10" font-family="'Arial Unicode MS','Arial'" text-anchor="middle">TÝM</text>
+   <line x1="208" x2="438" y1="19" y2="19" stroke="#00aaaa" stroke-width="1"/>
+   <text x="213" y="29" fill="#000000" font-size="10" font-family="'Arial Unicode MS','Arial'" text-decoration="underline">PŘEZDÍVKA</text>
+   <text x="213" y="42" fill="#000000" font-size="10" font-family="'Arial Unicode MS','Arial'">IZO ŠKOLY</text>
+   <text x="213" y="55" fill="#000000" font-size="10" font-family="'Arial Unicode MS','Arial'">PROPLÁCET JÍZDNÉ?</text>
+   <text x="328" y="29" fill="#000000" font-size="10" font-family="'Arial Unicode MS','Arial'" text-decoration="underline">VARCHAR2(20)</text>
+   <text x="328" y="42" fill="#000000" font-size="10" font-family="'Arial Unicode MS','Arial'">INTEGER</text>
+   <text x="328" y="55" fill="#000000" font-size="10" font-family="'Arial Unicode MS','Arial'">VARCHAR2(20)</text>
+   <text x="409" y="29" fill="#000000" font-size="10" font-family="'Arial Unicode MS','Arial'" text-decoration="underline">&lt;pk&gt;</text>
+   <rect x="3" y="103" fill="#ffffff" width="0" height="0" stroke="none" stroke-width="0"/>
+   <defs>
+      <linearGradient id="Gradient3" x1="0%" x2="100%" y1="0%" y2="100%" gradientUnits="objectBoundingBox">
+         <stop offset="5%" stop-color="#ffffff"/>
+         <stop offset="95%" stop-color="#b0ffff"/>
+      </linearGradient>
+   </defs>
+   <rect x="3" y="103" fill="url(#Gradient3)" width="193" height="73" stroke="#00aaaa" stroke-width="1"/>
+   <text x="99" y="114" fill="#000000" font-size="10" font-family="'Arial Unicode MS','Arial'" text-anchor="middle">ROČNÍK</text>
+   <line x1="3" x2="196" y1="120" y2="120" stroke="#00aaaa" stroke-width="1"/>
+   <text x="7" y="130" fill="#000000" font-size="10" font-family="'Arial Unicode MS','Arial'" text-decoration="underline">POŘADÍ</text>
+   <text x="7" y="143" fill="#000000" font-size="10" font-family="'Arial Unicode MS','Arial'">DATUM</text>
+   <text x="7" y="156" fill="#000000" font-size="10" font-family="'Arial Unicode MS','Arial'">POSLUCHÁRNA</text>
+   <text x="7" y="169" fill="#000000" font-size="10" font-family="'Arial Unicode MS','Arial'">ROZPOČET</text>
+   <text x="92" y="130" fill="#000000" font-size="10" font-family="'Arial Unicode MS','Arial'" text-decoration="underline">INTEGER</text>
+   <text x="92" y="143" fill="#000000" font-size="10" font-family="'Arial Unicode MS','Arial'">DATE</text>
+   <text x="92" y="156" fill="#000000" font-size="10" font-family="'Arial Unicode MS','Arial'">VARCHAR2(5)</text>
+   <text x="92" y="169" fill="#000000" font-size="10" font-family="'Arial Unicode MS','Arial'">FLOAT(6)</text>
+   <text x="167" y="130" fill="#000000" font-size="10" font-family="'Arial Unicode MS','Arial'" text-decoration="underline">&lt;pk&gt;</text>
+   <rect x="260" y="192" fill="#ffffff" width="0" height="0" stroke="none" stroke-width="0"/>
+   <defs>
+      <linearGradient id="Gradient4" x1="0%" x2="100%" y1="0%" y2="100%" gradientUnits="objectBoundingBox">
+         <stop offset="5%" stop-color="#ffffff"/>
+         <stop offset="95%" stop-color="#b0ffff"/>
+      </linearGradient>
+   </defs>
+   <rect x="260" y="192" fill="url(#Gradient4)" width="169" height="60" stroke="#00aaaa" stroke-width="1"/>
+   <text x="344" y="203" fill="#000000" font-size="10" font-family="'Arial Unicode MS','Arial'" text-anchor="middle">KATEDRA</text>
+   <line x1="260" x2="429" y1="209" y2="209" stroke="#00aaaa" stroke-width="1"/>
+   <text x="264" y="219" fill="#000000" font-size="10" font-family="'Arial Unicode MS','Arial'" text-decoration="underline">ZKRATKA</text>
+   <text x="264" y="232" fill="#000000" font-size="10" font-family="'Arial Unicode MS','Arial'">GARANT</text>
+   <text x="264" y="245" fill="#000000" font-size="10" font-family="'Arial Unicode MS','Arial'">TELEFON</text>
+   <text x="320" y="219" fill="#000000" font-size="10" font-family="'Arial Unicode MS','Arial'" text-decoration="underline">VARCHAR2(8)</text>
+   <text x="320" y="232" fill="#000000" font-size="10" font-family="'Arial Unicode MS','Arial'">VARCHAR2(40)</text>
+   <text x="320" y="245" fill="#000000" font-size="10" font-family="'Arial Unicode MS','Arial'">VARCHAR2(10)</text>
+   <text x="401" y="219" fill="#000000" font-size="10" font-family="'Arial Unicode MS','Arial'" text-decoration="underline">&lt;pk&gt;</text>
+   <rect x="237" y="106" fill="#ffffff" width="0" height="0" stroke="none" stroke-width="0"/>
+   <defs>
+      <linearGradient id="Gradient5" x1="0%" x2="100%" y1="0%" y2="100%" gradientUnits="objectBoundingBox">
+         <stop offset="5%" stop-color="#ffffff"/>
+         <stop offset="95%" stop-color="#b2d6fc"/>
+      </linearGradient>
+   </defs>
+   <rect x="237" y="106" fill="url(#Gradient5)" width="196" height="53" stroke="#00aaaa" stroke-width="1"/>
+   <text x="335" y="117" fill="#000000" font-size="10" font-family="'Arial Unicode MS','Arial'" text-anchor="middle">SE ÚČASTNIL</text>
+   <line x1="237" x2="433" y1="123" y2="123" stroke="#00aaaa" stroke-width="1"/>
+   <text x="242" y="133" fill="#000000" font-size="10" font-family="'Arial Unicode MS','Arial'" text-decoration="underline">PŘEZDÍVKA</text>
+   <text x="242" y="146" fill="#000000" font-size="10" font-family="'Arial Unicode MS','Arial'" text-decoration="underline">POŘADÍ</text>
+   <text x="308" y="133" fill="#000000" font-size="10" font-family="'Arial Unicode MS','Arial'" text-decoration="underline">VARCHAR2(20)</text>
+   <text x="308" y="146" fill="#000000" font-size="10" font-family="'Arial Unicode MS','Arial'" text-decoration="underline">INTEGER</text>
+   <text x="389" y="133" fill="#000000" font-size="10" font-family="'Arial Unicode MS','Arial'" text-decoration="underline">&lt;pk,fk1&gt;</text>
+   <text x="389" y="146" fill="#000000" font-size="10" font-family="'Arial Unicode MS','Arial'" text-decoration="underline">&lt;pk,fk2&gt;</text>
+   <rect x="4" y="199" fill="#ffffff" width="0" height="0" stroke="none" stroke-width="0"/>
+   <defs>
+      <linearGradient id="Gradient6" x1="0%" x2="100%" y1="0%" y2="100%" gradientUnits="objectBoundingBox">
+         <stop offset="5%" stop-color="#ffffff"/>
+         <stop offset="95%" stop-color="#b2d6fc"/>
+      </linearGradient>
+   </defs>
+   <rect x="4" y="199" fill="url(#Gradient6)" width="180" height="53" stroke="#00aaaa" stroke-width="1"/>
+   <text x="94" y="210" fill="#000000" font-size="10" font-family="'Arial Unicode MS','Arial'" text-anchor="middle">GARANTOVALA</text>
+   <line x1="4" x2="184" y1="216" y2="216" stroke="#00aaaa" stroke-width="1"/>
+   <text x="9" y="226" fill="#000000" font-size="10" font-family="'Arial Unicode MS','Arial'" text-decoration="underline">POŘADÍ</text>
+   <text x="9" y="239" fill="#000000" font-size="10" font-family="'Arial Unicode MS','Arial'" text-decoration="underline">ZKRATKA</text>
+   <text x="65" y="226" fill="#000000" font-size="10" font-family="'Arial Unicode MS','Arial'" text-decoration="underline">INTEGER</text>
+   <text x="65" y="239" fill="#000000" font-size="10" font-family="'Arial Unicode MS','Arial'" text-decoration="underline">VARCHAR2(8)</text>
+   <text x="140" y="226" fill="#000000" font-size="10" font-family="'Arial Unicode MS','Arial'" text-decoration="underline">&lt;pk,fk1&gt;</text>
+   <text x="140" y="239" fill="#000000" font-size="10" font-family="'Arial Unicode MS','Arial'" text-decoration="underline">&lt;pk,fk2&gt;</text>
+</svg>
